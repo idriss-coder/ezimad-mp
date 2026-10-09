@@ -82,14 +82,16 @@ Index créés de façon idempotente au premier accès (promesse mémorisée par 
 
 ## 7. Statistiques & cache
 
-`getPublicStats()` : `countDocuments` + agrégation `$unwind productInterests`. Mise en cache `unstable_cache` (tag `ezimad-public-stats`, revalidation 60 s) et invalidation par tag après inscription / changement d'intérêt.
+`getPublicStats()` : `countDocuments` + agrégation `$unwind productInterests`, directive `"use cache"` + `cacheLife("minutes")` + `cacheTag("ezimad-public-stats")` (Next 16, Cache Components). Les Server Actions appellent `updateTag` après inscription / changement d'intérêt (lecture immédiate de ses propres écritures).
+
+Les blocs chiffrés (tableau, classement, étape 2) sont rendus **à la requête** (`await connection()` dans un `<Suspense>`) et lisent le cache : exécuter le driver MongoDB pendant un re-prerender déclenchait l'erreur Next « unstable value `new Date()` ». Le reste de la page est prérendu statiquement ; les fallbacks ont la même taille que le contenu (pas de saut de mise en page).
 
 ## 8. Flux utilisateur
 
 1. Arrivée sur `/cm` → hero, tableau « Objectif / Réalisé » réel, CTA « Je m'inscris gratuitement ».
 2. Étape 1 : prénom, WhatsApp, email (option), entreprise (combobox searchable + saisie libre), zone (préremplie par l'entreprise), catégories, consentement.
 3. Succès → message « Inscription enregistrée » ou « Vous étiez déjà inscrit, informations mises à jour » (doublon) → cookie posé.
-4. Étape 2 : « Quels produits souhaitez-vous acheter moins cher ? » — cartes avec bouton « Je suis intéressé » (toggle persistant, optimiste, avec rollback en cas d'erreur) + nombre réel d'intéressés.
+4. Étape 2 : « Quels produits souhaitez-vous acheter moins cher ? » — sélection multiple « Je suis intéressé » (locale) + nombre réel d'intéressés, puis « Valider mes choix » enregistre la liste en une fois → écran de succès animé (inscrit, prévenu sur WhatsApp à l'objectif) avec « Modifier mes choix ».
 5. Section partenaires → « Devenir partenaire » → formulaire → confirmation.
 
 ## 9. Lots
@@ -97,21 +99,32 @@ Index créés de façon idempotente au premier accès (promesse mémorisée par 
 | # | Lot | Critère d'acceptation | Statut |
 |---|---|---|---|
 | 1 | Audit + plan | Ce fichier existe | DONE |
-| 2 | Fondations, design system, structure | `npm run dev` affiche la page, tokens définis | TODO |
-| 3 | Mongo + index + validations | Connexion OK, collections `ezimad_*` | TODO |
-| 4 | Données entreprises / zones / catalogue | Une seule source remplaçable | TODO |
-| 5 | Landing + compteur réel | Compteur = `countDocuments` | TODO |
-| 6 | Inscription étape 1 | Création + doublon idempotent | TODO |
-| 7 | Intérêts étape 2 | Toggle persistant sans doublon | TODO |
-| 8 | Partenaires | Lead enregistré | TODO |
-| 9 | Responsive, a11y, SEO, erreurs | Mobile + desktop propres | TODO |
-| 10 | Typecheck / lint / build | 0 erreur | TODO |
-| 11 | README + `.env.example` | Lancement local documenté | TODO |
+| 2 | Fondations, design system, structure | `npm run dev` affiche la page, tokens définis | DONE |
+| 3 | Mongo + index + validations | Connexion OK, collections `ezimad_*` | DONE |
+| 4 | Données entreprises / zones / catalogue | Une seule source remplaçable | DONE |
+| 5 | Landing + compteur réel | Compteur = `countDocuments` | DONE |
+| 6 | Inscription étape 1 | Création + doublon idempotent | DONE |
+| 7 | Intérêts étape 2 | Toggle persistant sans doublon | DONE |
+| 8 | Partenaires | Lead enregistré | DONE |
+| 9 | Responsive, a11y, SEO, erreurs | Mobile + desktop propres | DONE |
+| 10 | Typecheck / lint / build | 0 erreur | DONE |
+| 11 | README + `.env.example` | Lancement local documenté | DONE |
+| 12 | Refonte visuelle (impeccable) | Page épurée : vitrine produits photo, compteur, inscription, partenaires ; textes réduits | DONE |
 
 ## 10. Risques / décisions
 
 - **Liste officielle des entreprises MAGZI non fournie** : `src/data/magzi-companies.ts` est prêt à la recevoir. Seules des entrées marquées `temporary: true` existent (masquées en production) ; la saisie libre reste possible.
 - **Zones MAGZI** : liste à valider par l'équipe métier.
-- **Prix indicatifs** non fournis : champ `indicativePrice` prévu dans le catalogue, non affiché tant qu'il est `null`.
+- **Prix** non fournis : `publicPrice` (barré) et `memberPrice` (prix salarié) prévus dans le catalogue ; rien n'est affiché tant qu'ils valent `null` (le brief interdit d'inventer des prix).
 - **Réinscription avec le numéro d'un tiers** : sans OTP, quelqu'un qui connaît un numéro peut modifier les intérêts associés. Risque accepté pour le MVP (données peu sensibles) ; un OTP WhatsApp pourra être ajouté.
 - Base partagée : préfixe `ezimad_` obligatoire sur toute nouvelle collection.
+
+## 11. Vérifications réalisées (2026-10-07)
+
+- `tsc --noEmit` : 0 erreur · `eslint` : 0 erreur / 0 warning · `next build` : OK (`/cm` en Partial Prerender).
+- Parcours réel sur le serveur de production (mobile + desktop) : landing → inscription → étape 2 → compteur public mis à jour (0 → 1).
+- Réinscription du même numéro saisi dans un autre format (`699000001` / `+237 6 99 00 00 01`) → 1 seul document, catégories fusionnées, `createdAt` conservé.
+- Intérêt ajouté deux fois → stocké une seule fois ; produit inconnu et entrées invalides rejetés côté serveur.
+- Lead partenaire enregistré dans `ezimad_partner_leads`.
+- Données de test supprimées de la base après vérification.
+- Hors périmètre volontaire : back-office, export CSV, tests end-to-end.

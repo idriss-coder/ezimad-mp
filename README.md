@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EZIMAD-MP — Vitrine salariés MAGZI
 
-## Getting Started
+Landing `/cm` qui constitue une base de demande qualifiée : inscription des salariés des zones MAGZI,
+choix des produits souhaités, compteur public réel vers l'objectif de 2 000 inscrits, et formulaire
+pour les entreprises partenaires. Le back-office n'est pas encore construit (voir `docs/`).
 
-First, run the development server:
+## Stack
+
+Next.js 16 (App Router, Cache Components) · TypeScript strict · Tailwind CSS v4 · shadcn/ui (Base UI)
+· MongoDB (driver officiel) · Zod · React Hook Form · libphonenumber-js.
+
+## Lancer en local
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env.local   # puis renseigner les valeurs
+npm install
+npm run dev                  # http://localhost:3000 → redirige vers /cm
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Vérifications : `npx tsc --noEmit`, `npm run lint`, `npm run build`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Variables d'environnement
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Rôle |
+|---|---|
+| `MONGODB_URI` | Chaîne Atlas `mongodb+srv://…` (le nom de base est lu dans l'URI) |
+| `MONGODB_DB` | Optionnel : nom de base si absent de l'URI |
+| `EZIMAD_SESSION_SECRET` | Secret HMAC du cookie salarié, 32+ caractères (`openssl rand -base64 48`) |
+| `NEXT_PUBLIC_SITE_URL` | URL publique (métadonnées / Open Graph) |
 
-## Learn More
+## MongoDB
 
-To learn more about Next.js, take a look at the following resources:
+La base est **partagée avec un autre projet** : toutes les collections EZIMAD sont préfixées `ezimad_`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `ezimad_employees` — salariés (index unique sur `phone` en E.164, index `createdAt`)
+- `ezimad_partner_leads` — demandes des entreprises partenaires (index `createdAt`)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Les index sont créés automatiquement au premier accès. Une réinscription avec le même numéro met à jour
+la fiche existante (aucun doublon).
 
-## Deploy on Vercel
+## Données métier à fournir
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `src/data/magzi-companies.ts` — liste officielle des entreprises et zones (les entrées `temporary`
+  ne s'affichent qu'en développement ; la saisie libre reste toujours possible).
+- `src/data/catalog.ts` — catégories, produits, photos (`public/products/`) et prix. Quand `publicPrice` et
+  `memberPrice` sont renseignés, la carte affiche le prix public barré, le prix salarié et la remise ; tant qu'ils
+  valent `null`, aucun prix n'est affiché.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Déploiement Vercel
+
+1. Importer le dépôt dans Vercel (preset Next.js, aucune configuration particulière).
+2. Renseigner les variables ci-dessus dans *Settings → Environment Variables*.
+3. Dans Atlas, autoriser l'accès réseau depuis Vercel (*Network Access*).
