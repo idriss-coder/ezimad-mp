@@ -89,6 +89,7 @@ export function PartnerForm() {
         const common = {
           id,
           placeholder: field.placeholder,
+          "aria-required": !field.optional,
           "aria-invalid": !!error,
           "aria-describedby": describedBy(id, error),
           ...register(field.name),

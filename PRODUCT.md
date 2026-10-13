@@ -10,23 +10,23 @@ Salariés des zones industrielles MAGZI (Cameroun), le plus souvent sur mobile, 
 
 ## Product Purpose
 
-Constituer une base de demande qualifiée (objectif 2 000 inscrits) pour négocier des prix préférentiels auprès des producteurs MAGZI. Succès : inscription complète, intérêts produits exprimés, leads partenaires.
+Constituer une base de demande qualifiée (objectif 2 000 inscrits) pour négocier des prix préférentiels auprès des producteurs MAGZI. Succès : inscription complète et catégories de produits choisies. (La partie entreprises partenaires est masquée pour l'instant.)
 
 ## Brand Personality
 
-Simple, élégant, fiable. Ton direct et sobre, comme un commerçant sérieux : une information utile par phrase, jamais de remplissage. Références : link.com (épure, hiérarchie typographique nette, boutons discrets, surfaces grises encadrées) et sarthoaccess.com/collections/all (grille produits photographique, nom + prix barré, aucune décoration).
+Nostalgique, simple, franc (décision client du 2026-10-13). Le site doit ressembler à une page web « d'avant » : HTML de débutant, polices système, liens soulignés, filets gris, boutons à l'ancienne, contrastes forts. Références : Amazon classique (bandeau marine, boutons jaunes en léger dégradé, liste de résultats image + titre + ligne de notation, focus orange) et les pages « compte à rebours » (titre en capitales, filet rouge, gros chiffres rouges séparés par « : », libellés sous chaque nombre).
 
 ## Anti-references
 
-Landing pages « générées par IA » : petits libellés en majuscules espacées au-dessus de chaque section, police mono décorative, bavardage marketing, puces et encarts explicatifs à répétition, chiffres sociaux inventés, dégradés et glassmorphism.
+Landing pages modernes « générées par IA » : grandes typos serrées, cartes arrondies à ombres douces, glassmorphism, animations d'entrée, petits libellés en capitales au-dessus de chaque section, bavardage marketing, chiffres inventés.
 
 ## Design Principles
 
-1. Une information utile par bloc : si une phrase ne sert pas la décision, elle disparaît.
-2. Le produit se montre : photos réelles, noms clairs, prix uniquement quand ils sont réels.
-3. Chiffres vrais ou rien : compteurs issus de la base, jamais de valeur fictive.
-4. Hiérarchie par la taille et la graisse, pas par la décoration.
-5. Mobile d'abord : le CTA principal est visible sans défiler.
+1. Une page, deux blocs : le compteur en haut, la liste des catégories en dessous. Rien d'autre.
+2. Tout le parcours d'inscription vit dans une boîte de dialogue : informations → catégories → « inscription réussie ».
+3. Chiffres vrais ou rien : compteur et nombre de cœurs issus de la base, jamais de valeur fictive.
+4. Hiérarchie par la taille, la graisse et les filets, pas par la décoration.
+5. Mobile d'abord : le bouton « Je m'inscris » est visible sans défiler.
 
 ## Accessibility & Inclusion
 

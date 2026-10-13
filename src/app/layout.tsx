@@ -1,12 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Host_Grotesk } from "next/font/google";
 import "./globals.css";
-
-const hostGrotesk = Host_Grotesk({
-  variable: "--font-host",
-  subsets: ["latin", "latin-ext"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
@@ -15,7 +8,7 @@ export const metadata: Metadata = {
     template: "%s · EZIMAD",
   },
   description:
-    "Les produits des entreprises MAGZI, à prix préférentiels pour les salariés des zones industrielles. Inscription gratuite.",
+    "Les produits des entreprises MAGZI, à prix préférentiels pour les salariés des zones industrielles. Inscrivez-vous et choisissez vos catégories de produits.",
   openGraph: {
     type: "website",
     locale: "fr_CM",
@@ -24,12 +17,13 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#131921",
 };
 
+// Polices système uniquement : page légère et rendu « web d'avant » voulu par le client.
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="fr" className={`${hostGrotesk.variable} h-full antialiased`}>
+    <html lang="fr" className="h-full">
       <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );

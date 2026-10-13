@@ -6,7 +6,8 @@ import { PUBLIC_STATS_TAG } from "./tags";
 
 export type PublicStats = {
   totalEmployees: number;
-  interestsByProduct: Record<string, number>;
+  /** Nombre d'inscrits intéressés par catégorie (les cœurs de la liste). */
+  interestsByCategory: Record<string, number>;
 };
 
 /**
@@ -24,14 +25,14 @@ export async function getPublicStats(): Promise<PublicStats | null> {
       employees.countDocuments(),
       employees
         .aggregate<{ _id: string; count: number }>([
-          { $unwind: "$productInterests" },
-          { $group: { _id: "$productInterests", count: { $sum: 1 } } },
+          { $unwind: "$categories" },
+          { $group: { _id: "$categories", count: { $sum: 1 } } },
         ])
         .toArray(),
     ]);
     return {
       totalEmployees,
-      interestsByProduct: Object.fromEntries(interests.map((row) => [row._id, row.count])),
+      interestsByCategory: Object.fromEntries(interests.map((row) => [row._id, row.count])),
     };
   } catch (error) {
     console.error("[ezimad] getPublicStats failed", (error as Error).name);

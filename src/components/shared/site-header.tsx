@@ -1,22 +1,24 @@
-import { buttonVariants } from "@/components/ui/button";
+import { SignupButton } from "@/features/registration/signup-button";
 
 import { Brand } from "./brand";
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-40 mx-auto w-full max-w-6xl px-2 pt-2 sm:px-6 sm:pt-3">
-      <div className="flex h-14 items-center justify-between gap-4 rounded-xl border border-border bg-background/95 pr-2 pl-4 backdrop-blur-sm">
-        <a href="#top" aria-label="EZIMAD, retour en haut">
-          <Brand />
-        </a>
-        <nav aria-label="Navigation principale" className="flex items-center gap-2">
-          <a href="#partenaires" className={buttonVariants({ variant: "soft", size: "lg", className: "px-3.5" })}>
-            Entreprises
+    <header id="top">
+      <div className="bg-nav text-white">
+        <div className="mx-auto flex h-14 max-w-4xl items-center justify-between gap-4 px-3 sm:px-4">
+          <a
+            href="#top"
+            aria-label="EZIMAD, haut de la page"
+            className="rounded-[2px] px-1.5 py-2 outline-offset-0 hover:outline hover:outline-1 hover:outline-white"
+          >
+            <Brand />
           </a>
-          <a href="#inscription" className={buttonVariants({ size: "lg", className: "px-3.5" })}>
-            S’inscrire
-          </a>
-        </nav>
+          <SignupButton className="min-h-10 px-4 text-sm font-bold">S’inscrire</SignupButton>
+        </div>
+      </div>
+      <div className="bg-nav-2 text-white">
+        <p className="mx-auto max-w-4xl px-3 py-2 text-sm sm:px-4">Prix préférentiels pour les salariés des zones MAGZI</p>
       </div>
     </header>
   );

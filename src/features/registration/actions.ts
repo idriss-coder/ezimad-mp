@@ -1,22 +1,21 @@
 "use server";
 
-import { MongoServerError, type ObjectId } from "mongodb";
+import { MongoServerError } from "mongodb";
 import { updateTag } from "next/cache";
 
-import type { ProductId } from "@/data/catalog";
 import { findCompany } from "@/data/magzi-companies";
 import { COLLECTIONS, getDb } from "@/lib/db/mongo";
 import { normalizePhone } from "@/lib/phone";
-import { setLeadSession } from "@/lib/session";
 import { PUBLIC_STATS_TAG } from "@/features/public-stats/tags";
 
 import { registrationSchema, type RegistrationInput } from "./schema";
 import type { EmployeeDoc } from "./types";
 
 export type RegisterResult =
-  | { ok: true; status: "created" | "updated"; firstName: string; productInterests: ProductId[] }
+  | { ok: true; status: "created" | "updated"; firstName: string }
   | { ok: false; error: string; fieldErrors?: Partial<Record<keyof RegistrationInput, string>> };
 
+/** Enregistre en une fois les informations (étape 1) et les catégories choisies (étape 2). */
 export async function registerEmployee(input: RegistrationInput): Promise<RegisterResult> {
   const parsed = registrationSchema.safeParse(input);
   if (!parsed.success) {
@@ -30,9 +29,7 @@ export async function registerEmployee(input: RegistrationInput): Promise<Regist
 
   const data = parsed.data;
   // Honeypot rempli : on simule un succès sans rien écrire.
-  if (data.website) {
-    return { ok: true, status: "created", firstName: data.firstName, productInterests: [] };
-  }
+  if (data.website) return { ok: true, status: "created", firstName: data.firstName };
 
   const phone = normalizePhone(data.phone)!;
   const company = findCompany(data.companyId);
@@ -43,6 +40,8 @@ export async function registerEmployee(input: RegistrationInput): Promise<Regist
     companyId: company?.id ?? null,
     companyName: company?.name ?? data.companyName,
     magziZone: company?.zoneId ?? data.magziZone,
+    // Réinscription : le dernier choix de catégories fait foi.
+    categories: [...new Set(data.categories)],
     updatedAt: now,
   };
   // Un email vide ne doit pas effacer un email déjà connu.
@@ -53,17 +52,12 @@ export async function registerEmployee(input: RegistrationInput): Promise<Regist
     : undefined;
 
   try {
-    const db = await getDb();
-    const employees = db.collection<EmployeeDoc>(COLLECTIONS.employees);
+    const employees = (await getDb()).collection<EmployeeDoc>(COLLECTIONS.employees);
 
     const upsert = () =>
       employees.updateOne(
         { phone },
-        {
-          $set: set,
-          $addToSet: { categories: { $each: data.categories } },
-          $setOnInsert: { productInterests: [], consentAt: now, createdAt: now, ...(source && { source }) },
-        },
+        { $set: set, $setOnInsert: { consentAt: now, createdAt: now, ...(source && { source }) } },
         { upsert: true, ignoreUndefined: true },
       );
 
@@ -76,18 +70,9 @@ export async function registerEmployee(input: RegistrationInput): Promise<Regist
       else throw error;
     }
 
-    const lead = await employees.findOne({ phone }, { projection: { _id: 1, productInterests: 1 } });
-    if (!lead) throw new Error("lead introuvable après upsert");
-
-    await setLeadSession((lead._id as ObjectId).toHexString());
+    // Compteur et cœurs à jour dès le retour de l'action.
     updateTag(PUBLIC_STATS_TAG);
-
-    return {
-      ok: true,
-      status: result.upsertedCount > 0 ? "created" : "updated",
-      firstName: data.firstName,
-      productInterests: lead.productInterests ?? [],
-    };
+    return { ok: true, status: result.upsertedCount > 0 ? "created" : "updated", firstName: data.firstName };
   } catch (error) {
     console.error("[ezimad] registerEmployee failed", error instanceof MongoServerError ? error.code : (error as Error).name);
     return { ok: false, error: "Le service est momentanément indisponible. Réessayez dans un instant." };

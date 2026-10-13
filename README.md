@@ -1,8 +1,10 @@
 # EZIMAD-MP — Vitrine salariés MAGZI
 
-Landing `/cm` qui constitue une base de demande qualifiée : inscription des salariés des zones MAGZI,
-choix des produits souhaités, compteur public réel vers l'objectif de 2 000 inscrits, et formulaire
-pour les entreprises partenaires. Le back-office n'est pas encore construit (voir `docs/`).
+Landing `/cm` au style volontairement « web d'avant » (inspiré d'Amazon classique) qui constitue une base de
+demande qualifiée : compte à rebours réel des inscriptions vers l'objectif de 2 000, liste des catégories de produits
+avec le nombre d'intéressés (cœurs), et inscription en deux étapes dans une boîte de dialogue (informations, puis
+catégories). La section entreprises partenaires est masquée (code conservé dans `src/features/partner-leads`).
+Le back-office n'est pas encore construit (voir `docs/`).
 
 ## Stack
 
@@ -25,7 +27,6 @@ Vérifications : `npx tsc --noEmit`, `npm run lint`, `npm run build`.
 |---|---|
 | `MONGODB_URI` | Chaîne Atlas `mongodb+srv://…` (le nom de base est lu dans l'URI) |
 | `MONGODB_DB` | Optionnel : nom de base si absent de l'URI |
-| `EZIMAD_SESSION_SECRET` | Secret HMAC du cookie salarié, 32+ caractères (`openssl rand -base64 48`) |
 | `NEXT_PUBLIC_SITE_URL` | URL publique (métadonnées / Open Graph) |
 
 ## MongoDB
@@ -36,15 +37,14 @@ La base est **partagée avec un autre projet** : toutes les collections EZIMAD s
 - `ezimad_partner_leads` — demandes des entreprises partenaires (index `createdAt`)
 
 Les index sont créés automatiquement au premier accès. Une réinscription avec le même numéro met à jour
-la fiche existante (aucun doublon).
+la fiche existante (aucun doublon) ; ses catégories sont remplacées par le dernier choix.
 
 ## Données métier à fournir
 
 - `src/data/magzi-companies.ts` — liste officielle des entreprises et zones (les entrées `temporary`
   ne s'affichent qu'en développement ; la saisie libre reste toujours possible).
-- `src/data/catalog.ts` — catégories, produits, photos (`public/products/`) et prix. Quand `publicPrice` et
-  `memberPrice` sont renseignés, la carte affiche le prix public barré, le prix salarié et la remise ; tant qu'ils
-  valent `null`, aucun prix n'est affiché.
+- `src/data/catalog.ts` — catégories (titre, produits, photo dans `public/categories/`). Les ids sont stockés en
+  base : ne pas les renommer, en ajouter. La photo de « Plastiques et équipements ménagers » est provisoire.
 
 ## Déploiement Vercel
 
