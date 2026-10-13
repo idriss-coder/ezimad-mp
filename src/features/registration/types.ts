@@ -1,6 +1,6 @@
 import type { ObjectId } from "mongodb";
 
-import type { CategoryId, ProductId } from "@/data/catalog";
+import type { CategoryId } from "@/data/catalog";
 
 export type EmployeeDoc = {
   _id: ObjectId;
@@ -11,14 +11,9 @@ export type EmployeeDoc = {
   companyName: string;
   magziZone: string;
   categories: CategoryId[];
-  productInterests: ProductId[];
   consentAt: Date;
   source?: { utmSource?: string; utmMedium?: string; utmCampaign?: string };
   createdAt: Date;
   updatedAt: Date;
 };
 
-export type CurrentLead = {
-  firstName: string;
-  productInterests: ProductId[];
-};

@@ -12,12 +12,10 @@ export type MagziZone = {
   label: string;
 };
 
-/** Zones à valider par l'équipe métier. */
+/** Les deux zones MAGZI couvertes. */
 export const MAGZI_ZONES = [
-  { id: "douala-bassa", label: "Douala — Bassa" },
-  { id: "douala-bonaberi", label: "Douala — Bonabéri" },
-  { id: "douala-logbaba", label: "Douala — Logbaba" },
-  { id: "autre", label: "Autre zone" },
+  { id: "douala-bassa", label: "Bassa" },
+  { id: "douala-bonaberi", label: "Bonabéri" },
 ] as const satisfies readonly MagziZone[];
 
 export type MagziZoneId = (typeof MAGZI_ZONES)[number]["id"];
@@ -34,7 +32,6 @@ export type MagziCompany = {
 const ALL_COMPANIES: MagziCompany[] = [
   { id: "tmp-entreprise-1", name: "Entreprise test 1 (temporaire)", zoneId: "douala-bassa", temporary: true },
   { id: "tmp-entreprise-2", name: "Entreprise test 2 (temporaire)", zoneId: "douala-bonaberi", temporary: true },
-  { id: "tmp-entreprise-3", name: "Entreprise test 3 (temporaire)", zoneId: "douala-logbaba", temporary: true },
 ];
 
 export const MAGZI_COMPANIES: MagziCompany[] =

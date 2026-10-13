@@ -128,3 +128,46 @@ Les blocs chiffrés (tableau, classement, étape 2) sont rendus **à la requête
 - Lead partenaire enregistré dans `ezimad_partner_leads`.
 - Données de test supprimées de la base après vérification.
 - Hors périmètre volontaire : back-office, export CSV, tests end-to-end.
+
+---
+
+# V2 — Refonte « vintage » (décision client du 2026-10-13)
+
+## 12. Besoin UI/UX identifié
+
+Retour client : le site actuel est trop moderne. Il veut un site **nostalgique, à l'ancienne**, « comme quelqu'un qui débute en HTML » : très simple, bons contrastes.
+
+| Demande | Traduction UI/UX |
+|---|---|
+| Inspiré d'Amazon | Amazon « classique » : bandeau marine (#131921 / #232f3e), logo texte + « .cm », boutons jaunes en léger dégradé (#f7dfa5 → #f0c14b, bordure #a88734), liens bleus soulignés, focus orange (#e77600), filets gris #d5d9d9, pied de page marine avec barre « Haut de la page ». |
+| Vintage / débutant HTML | Polices système (Arial), aucune police web, aucune animation d'entrée, angles quasi droits, contrôles natifs (`<select>`, `<datalist>`, cases à cocher natives). |
+| Compteur façon compte à rebours | Bloc centré : titre en capitales, filet rouge, gros chiffres rouges sur 4 positions séparés par « : » (`0124 : 1876`), libellés INSCRITS / RESTANTS dessous. C'est un **compte à rebours d'inscriptions** vers 2 000 : chiffres réels, aucune date inventée. |
+| Produits en colonne, cœurs par catégorie | Liste type « résultats Amazon » : vignette carrée à gauche ; ligne 1 = titre numéroté de la catégorie ; ligne 2 = produits de la catégorie ; ligne 3 = cœur rouge + nombre réel d'intéressés (le cœur remplace les étoiles d'Amazon). |
+| Supprimer « Inscription gratuite » et « Comment ça marche » | Sections retirées. La page = compteur en haut + liste en dessous. |
+| Masquer la partie entreprise | Section et lien « Entreprises » retirés de la page ; le code `features/partner-leads` est conservé pour plus tard. |
+| Formulaire dans une boîte de dialogue | Dialogue Amazon (en-tête gris, ×) en 2 étapes : 1) informations → « Suivant » ; 2) catégories → « Valider mon inscription » ; puis simplement « Inscription réussie » + « Fermer ». |
+
+Catégories (reprises de la capture client) : Épicerie et produits alimentaires · Hygiène et entretien · Boissons non alcoolisées · Plastiques et équipements ménagers · Construction et amélioration de l'habitat.
+
+## 13. Décisions techniques V2
+
+- **Une seule écriture** : l'étape 1 est validée côté client, l'enregistrement se fait à la validation de l'étape 2 (informations + catégories). Plus de cookie de session ni de `productInterests` : `lib/session.ts` et `EZIMAD_SESSION_SECRET` disparaissent.
+- Réinscription du même numéro : `$set categories` (le dernier choix fait foi).
+- Ids de catégories stables quand le sens est conservé (`alimentation`, `hygiene`, `boissons`, `maison`) + `construction` : les inscriptions existantes restent comptées.
+- Cœurs = `$unwind categories` dans `getPublicStats` (même cache / tag qu'avant).
+- Le dialogue (`SignupDialog`) enveloppe la page dans le shell statique : plusieurs déclencheurs (en-tête, compteur, bas de liste), état conservé quand on ferme / rouvre en cours de saisie, et non remonté par le rafraîchissement RSC qui suit `updateTag`.
+- Entreprise : `<input list>` + `<datalist>` natif (saisie libre + suggestions MAGZI) à la place du combobox.
+- Images : `public/categories/`. « Construction » = photo CC0 (Wikimedia, Ekeleme Ijeoma). « Plastiques et équipements ménagers » réutilise provisoirement la photo de marmite : **à remplacer par une photo de bassines / seaux fournie par le client**.
+
+## 14. Lots V2
+
+| # | Lot | Critère d'acceptation | Statut |
+|---|---|---|---|
+| 13 | Analyse UI/UX + plan | Cette section existe, PRODUCT.md à jour | DONE |
+| 14 | Fondations vintage | Tokens Amazon dans `globals.css`, polices système, classes `.btn-primary` / `.btn-secondary` / `.text-input` | DONE |
+| 15 | Données catégories + stats | `catalog.ts` = 5 catégories ; `getPublicStats` renvoie `interestsByCategory` ; images `public/categories/` | DONE |
+| 16 | Inscription serveur simplifiée | Schéma + action en une écriture, sans cookie ; code mort supprimé | DONE |
+| 17 | Dialogue d'inscription 2 étapes | Infos → Suivant → catégories → Valider → « Inscription réussie » ; erreurs par champ ; focus géré | DONE |
+| 18 | Page `/cm` | En-tête + compteur compte à rebours + liste catégories à cœurs + pied de page ; sections retirées ; partenaires masqués | DONE |
+| 19 | Vérifications | `tsc`, `eslint`, `next build` ; parcours réel mobile + desktop ; compteur et cœurs mis à jour après inscription | DONE |
+| 20 | Docs | README / `.env.example` alignés | DONE |
