@@ -38,7 +38,6 @@ export function CountdownBoard({ total }: { total: number | null | undefined }) 
             /&nbsp;{digits(COMMUNITY_GOAL)}
           </span>
         </p>
-        <span className="mt-2 text-xs font-bold tracking-[0.12em] uppercase">Inscrits / attendus</span>
       </div>
       {!known && !loading && <p className="mt-3 text-sm text-muted-foreground">Compteur momentanément indisponible.</p>}
     </div>

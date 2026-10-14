@@ -46,7 +46,7 @@ export default function CmPage() {
               <LiveCountdown />
             </Suspense>
           </div>
-          <p className="mt-9 text-sm font-bold tracking-[0.14em] uppercase">M’avertir à l’ouverture des offres</p>
+          <p className="mt-9 text-[0.625rem] font-bold tracking-[0.12em] uppercase">M’avertir à l’ouverture des offres</p>
           <SignupButton className="mt-3 w-full max-w-xs text-base font-bold" />
         </section>
 
