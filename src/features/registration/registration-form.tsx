@@ -229,12 +229,12 @@ export function RegistrationForm({ form, step, onStepChange, onDone }: Props) {
                 {CATEGORIES.map((category) => (
                   <label
                     key={category.id}
-                    className="flex cursor-pointer items-center gap-3 rounded-[3px] border border-border p-2.5 hover:border-input has-checked:border-[#e77600] has-checked:bg-[#fef8f2]"
+                    className="flex cursor-pointer items-center gap-3 rounded-[3px] border border-border p-2.5 hover:border-input has-checked:border-logo-blue has-checked:bg-[#eef5fc]"
                   >
                     <input
                       type="checkbox"
                       value={category.id}
-                      className="size-5 shrink-0 accent-[#e77600]"
+                      className="size-5 shrink-0 accent-logo-blue"
                       {...register("categories")}
                     />
                     <Image
@@ -265,7 +265,7 @@ export function RegistrationForm({ form, step, onStepChange, onDone }: Props) {
                 <input
                   id="consent"
                   type="checkbox"
-                  className="mt-0.5 size-5 shrink-0 accent-[#e77600]"
+                  className="mt-0.5 size-5 shrink-0 accent-logo-blue"
                   aria-required
                   aria-invalid={!!errors.consent}
                   aria-describedby={errors.consent ? "consent-error" : undefined}

@@ -12,6 +12,8 @@
   --color-surface: var(--surface);
   --color-brand: var(--brand);
   --color-brand-ink: var(--brand-ink);
+  --color-logo-blue: var(--logo-blue);
+  --color-logo-green: var(--logo-green);
   --color-success: var(--success);
   --color-nav: var(--nav);
   --color-nav-2: var(--nav-2);
@@ -59,8 +61,8 @@
 
 /*
  * EZIMAD V2 : page web « à l'ancienne », inspirée d'Amazon classique.
- * Blanc franc, encre noire, bandeau marine, boutons jaunes, rouge des chiffres et des cœurs.
- * Couleurs en hexadécimal pour rester au plus près des références (Amazon, compte à rebours).
+ * Charte tirée du logo : bleu EZIMAD (#0057a8), vert des chevrons (#0a9830), gris.
+ * Blanc franc, encre noire, bandeaux bleu nuit, boutons bleus, rouge des chiffres et des cœurs.
  */
 :root {
   --background: #ffffff;
@@ -81,20 +83,23 @@
   --destructive: #c40000;
   --border: #d5d9d9;
   --input: #888c8c;
-  --ring: #c45500;
-  --success: #067d62;
-  /* Bandeaux marine (haut de page, sous-bandeau, pied de page). */
-  --nav: #131921;
-  --nav-2: #232f3e;
-  --nav-3: #37475a;
+  --ring: #0057a8;
+  --success: #0a8a2c;
+  /* Bandeaux bleu nuit dérivés du bleu du logo (haut de page, sous-bandeau, pied de page). */
+  --nav: #0a2342;
+  --nav-2: #0f3460;
+  --nav-3: #1d4a7c;
+  /* Couleurs du logo. */
+  --logo-blue: #0057a8;
+  --logo-green: #0a9830;
   --brand: var(--nav-2);
   --brand-ink: var(--nav);
-  --link: #0066c0;
-  --link-hover: #c45500;
+  --link: #0057a8;
+  --link-hover: #087a27;
   /* Rouge des chiffres du compteur et des cœurs (5,7:1 sur blanc). */
   --heart: #cc0c39;
   --chart-1: var(--nav-2);
-  --chart-2: var(--link);
+  --chart-2: var(--logo-green);
   --chart-3: var(--muted-foreground);
   --chart-4: var(--input);
   --chart-5: var(--border);
@@ -172,17 +177,19 @@
     text-decoration: none;
     white-space: nowrap;
   }
+  /* Bouton principal : bleu du logo, texte blanc (6,9:1 sur #0057a8). */
   .btn-primary {
-    border-color: #a88734 #9c7e31 #846a29;
-    background: linear-gradient(to bottom, #f7dfa5, #f0c14b);
-    box-shadow: 0 1px 0 rgb(255 255 255 / 0.4) inset;
+    border-color: #004a8f #00427f #003870;
+    background: linear-gradient(to bottom, #1f75c7, #0057a8);
+    color: #ffffff;
+    box-shadow: 0 1px 0 rgb(255 255 255 / 0.25) inset;
   }
   .btn-primary:hover {
-    background: linear-gradient(to bottom, #f5d78e, #eeb933);
+    background: linear-gradient(to bottom, #1468b8, #004a8f);
   }
   .btn-primary:active {
-    background: #f0c14b;
-    box-shadow: 0 1px 3px rgb(0 0 0 / 0.2) inset;
+    background: #004a8f;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.3) inset;
   }
   .btn-secondary {
     border-color: #adb1b8 #a2a6ac #8d9096;
@@ -199,8 +206,8 @@
   .btn-primary:focus-visible,
   .btn-secondary:focus-visible {
     outline: none;
-    border-color: #e77600;
-    box-shadow: 0 0 3px 2px rgb(228 121 17 / 0.5);
+    border-color: #0a9830;
+    box-shadow: 0 0 3px 2px rgb(10 152 48 / 0.45);
   }
   .btn-primary:disabled,
   .btn-secondary:disabled {
@@ -225,8 +232,8 @@
   }
   .text-input:focus {
     outline: none;
-    border-color: #e77600;
-    box-shadow: 0 0 3px 2px rgb(228 121 17 / 0.5);
+    border-color: #0057a8;
+    box-shadow: 0 0 3px 2px rgb(0 87 168 / 0.4);
   }
   .text-input[aria-invalid="true"] {
     border-color: var(--destructive);
