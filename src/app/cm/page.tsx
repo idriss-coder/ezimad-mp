@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import { SiteFooter } from "@/components/shared/site-footer";
 import { SiteHeader } from "@/components/shared/site-header";
 import { CategoryList } from "@/features/categories/category-list";
-import { CountdownBoard } from "@/features/public-stats/countdown-board";
+import { CountdownBackdrop, CountdownBoard } from "@/features/public-stats/countdown-board";
 import { getPublicStats } from "@/features/public-stats/queries";
 import { SignupButton } from "@/features/registration/signup-button";
 import { SignupDialog } from "@/features/registration/signup-dialog";
@@ -25,14 +25,22 @@ export default function CmPage() {
     <SignupDialog>
       <SiteHeader />
       <main className="flex-1">
-        <section aria-labelledby="compteur-title" className="border-b border-border px-4 py-10 text-center sm:py-14">
+        <section
+          aria-labelledby="compteur-title"
+          className="relative isolate overflow-hidden border-b border-border px-4 py-10 text-center sm:py-14"
+        >
+          <CountdownBackdrop />
           <h1
             id="compteur-title"
-            className="mx-auto max-w-2xl text-[clamp(1.375rem,4.4vw,2.125rem)] leading-tight tracking-[0.02em] uppercase"
+            className="mx-auto max-w-3xl text-[clamp(1.375rem,4.2vw,2.125rem)] leading-tight font-bold text-balance"
           >
-            Les offres ouvrent à 2&nbsp;000&nbsp;inscrits
+            Les produits des entreprises MAGZI, à prix préférentiels pour les salariés des zones industrielles.
           </h1>
-          <div aria-hidden className="mx-auto mt-4 h-[3px] w-16 bg-heart" />
+          <p className="mx-auto mt-3 max-w-2xl text-pretty sm:text-lg">
+            Inscrivez-vous gratuitement pour accéder prochainement aux offres négociées directement auprès des
+            producteurs.
+          </p>
+          <div aria-hidden className="mx-auto mt-5 h-[3px] w-16 bg-heart" />
           <div className="mt-8">
             <Suspense fallback={<CountdownBoard total={undefined} />}>
               <LiveCountdown />

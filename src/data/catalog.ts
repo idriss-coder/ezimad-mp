@@ -20,37 +20,35 @@ export const CATEGORIES = [
     title: "Épicerie et produits alimentaires",
     products: "Huile, farine, pâtes alimentaires, chocolat, café, lait en poudre, condiments.",
     image: "/categories/alimentation.jpg",
-    imageAlt: "Bouteilles d’huile de cuisson",
+    imageAlt: "Bidon de 5 litres d’huile de palme raffinée",
   },
   {
     id: "hygiene",
     title: "Hygiène et entretien",
     products: "Savons de ménage, savons de toilette, détergents, lessive, produits de nettoyage.",
     image: "/categories/hygiene.jpg",
-    imageAlt: "Lessive liquide versée dans un bouchon doseur",
+    imageAlt: "Assouplissant, eau de javel, lessive en poudre et savons de ménage",
   },
   {
     id: "boissons",
     title: "Boissons non alcoolisées",
     products: "Eaux minérales, jus, boissons gazeuses, boissons lactées longue conservation.",
     image: "/categories/boissons.jpg",
-    imageAlt: "Bouteilles d’eau minérale alignées",
+    imageAlt: "Bouteilles de jus, sodas et eau minérale alignées",
   },
   {
     id: "maison",
     title: "Plastiques et équipements ménagers",
     products: "Bassines, seaux, bidons, boîtes de conservation, petits équipements domestiques.",
-    // Photo provisoire : à remplacer par une photo de bassines et seaux.
     image: "/categories/maison.jpg",
-    imageAlt: "Marmite posée sur un plan de travail",
+    imageAlt: "Bassines, seaux et paniers en plastique de couleur",
   },
   {
     id: "construction",
     title: "Construction et amélioration de l’habitat",
     products: "Ciment, peinture, tôles, fers à béton et accessoires.",
-    // Photo CC0 : Ekeleme Ijeoma, Wikimedia Commons.
     image: "/categories/construction.jpg",
-    imageAlt: "Sacs de ciment chargés sur un camion",
+    imageAlt: "Sac de ciment de 50 kg",
   },
 ] as const satisfies readonly Category[];
 
