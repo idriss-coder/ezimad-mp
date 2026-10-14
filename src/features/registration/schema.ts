@@ -8,7 +8,7 @@ const optionalTrimmed = (max: number) => z.string().trim().max(max).optional();
 
 /** Schéma partagé client / serveur de l'inscription salarié (les deux étapes du dialogue). */
 export const registrationSchema = z.object({
-  firstName: z.string().trim().min(2, "Indiquez votre prénom").max(60, "60 caractères maximum"),
+  firstName: z.string().trim().min(2, "Indiquez votre nom et prénom").max(100, "100 caractères maximum"),
   phone: z
     .string()
     .trim()

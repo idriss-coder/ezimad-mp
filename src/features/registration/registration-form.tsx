@@ -118,10 +118,10 @@ export function RegistrationForm({ form, step, onStepChange, onDone }: Props) {
 
         {step === 1 ? (
           <div className="flex flex-col gap-4">
-            <Field id="firstName" label="Prénom" error={errors.firstName?.message}>
+            <Field id="firstName" label="Nom & prénom" error={errors.firstName?.message}>
               <input
                 id="firstName"
-                autoComplete="given-name"
+                autoComplete="name"
                 className="text-input"
                 aria-required
                 aria-invalid={!!errors.firstName}
