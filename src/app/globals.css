@@ -62,7 +62,7 @@
 /*
  * EZIMAD V2 : page web « à l'ancienne », inspirée d'Amazon classique.
  * Charte tirée du logo : bleu EZIMAD (#0057a8), vert des chevrons (#0a9830), gris.
- * Blanc franc, encre noire, bandeaux bleu nuit, boutons bleus, rouge des chiffres et des cœurs.
+ * Blanc franc, encre noire, bandeaux marine, boutons bleus, rouge des chiffres et des cœurs.
  */
 :root {
   --background: #ffffff;
@@ -85,10 +85,10 @@
   --input: #888c8c;
   --ring: #0057a8;
   --success: #0a8a2c;
-  /* Bandeaux bleu nuit dérivés du bleu du logo (haut de page, sous-bandeau, pied de page). */
-  --nav: #0a2342;
-  --nav-2: #0f3460;
-  --nav-3: #1d4a7c;
+  /* Bandeaux marine (haut de page, sous-bandeau, pied de page). */
+  --nav: #131921;
+  --nav-2: #232f3e;
+  --nav-3: #37475a;
   /* Couleurs du logo. */
   --logo-blue: #0057a8;
   --logo-green: #0a9830;

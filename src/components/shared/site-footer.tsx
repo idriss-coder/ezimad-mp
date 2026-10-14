@@ -3,7 +3,7 @@ import { Brand } from "./brand";
 export function SiteFooter() {
   return (
     <footer className="mt-auto text-white">
-      <a href="#top" className="block bg-nav-3 py-3.5 text-center text-sm hover:bg-[#2a5a90]">
+      <a href="#top" className="block bg-nav-3 py-3.5 text-center text-sm hover:bg-[#485769]">
         Haut de la page
       </a>
       <div className="bg-nav-2">

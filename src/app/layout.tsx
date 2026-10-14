@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a2342",
+  themeColor: "#131921",
 };
 
 // Polices système uniquement : page légère et rendu « web d'avant » voulu par le client.
