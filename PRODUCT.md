@@ -14,7 +14,7 @@ Constituer une base de demande qualifiée (objectif 2 000 inscrits) pour négoci
 
 ## Brand Personality
 
-Nostalgique, simple, franc (décision client du 2026-10-13). Le site doit ressembler à une page web « d'avant » : HTML de débutant, polices système, liens soulignés, filets gris, boutons à l'ancienne, contrastes forts. Références : Amazon classique (bandeau marine, boutons jaunes en léger dégradé, liste de résultats image + titre + ligne de notation, focus orange) et les pages « compte à rebours » (titre en capitales, filet rouge, gros chiffres rouges séparés par « : », libellés sous chaque nombre).
+Nostalgique, simple, franc (décision client du 2026-10-13). Le site doit ressembler à une page web « d'avant » : HTML de débutant, polices système, liens soulignés, filets gris, boutons à l'ancienne, contrastes forts. Références : Amazon classique (bandeau marine, boutons jaunes et orange en léger dégradé, liste de résultats image + titre + ligne de notation, focus orange) et les pages « compte à rebours » (titre en capitales, filet rouge, gros chiffres rouges séparés par « : », libellés sous chaque nombre).
 
 ## Anti-references
 
@@ -22,9 +22,9 @@ Landing pages modernes « générées par IA » : grandes typos serrées, cartes
 
 ## Design Principles
 
-1. Une page, deux blocs : le compteur en haut, la liste des catégories en dessous. Rien d'autre.
+1. Une page, deux blocs : le compteur en haut, la grille des produits du quotidien en dessous (une rubrique par catégorie, prix EZIMAD estimé + prix du marché barré, bouton orange « Je veux ce prix »). Rien d'autre.
 2. Tout le parcours d'inscription vit dans une boîte de dialogue : informations → catégories → « inscription réussie ».
-3. Chiffres vrais ou rien : compteur et nombre de cœurs issus de la base, jamais de valeur fictive.
+3. Chiffres vrais ou rien : compteur et nombre de cœurs issus de la base, jamais de valeur fictive. Prix barrés = prix réellement relevés (source et date dans `src/data/catalog.ts`) ; prix EZIMAD toujours présentés comme des estimations liées à l'objectif d'inscrits.
 4. Hiérarchie par la taille, la graisse et les filets, pas par la décoration.
 5. Mobile d'abord : le bouton « Je m'inscris » est visible sans défiler.
 

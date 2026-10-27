@@ -4,7 +4,7 @@ import { Suspense } from "react";
 
 import { SiteFooter } from "@/components/shared/site-footer";
 import { SiteHeader } from "@/components/shared/site-header";
-import { CategoryList } from "@/features/categories/category-list";
+import { ProductList } from "@/features/products/product-list";
 import { CountdownBackdrop, CountdownBoard } from "@/features/public-stats/countdown-board";
 import { getPublicStats } from "@/features/public-stats/queries";
 import { SignupButton } from "@/features/registration/signup-button";
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 /*
- * Page volontairement « à l'ancienne » (demande client) : le compteur en haut, la liste des catégories en dessous.
+ * Page volontairement « à l'ancienne » (demande client) : le compteur en haut, les produits et leurs prix en dessous.
  * Toute l'inscription se fait dans le dialogue. La section entreprises partenaires est masquée
  * (code conservé dans `features/partner-leads`).
  */
@@ -50,15 +50,15 @@ export default function CmPage() {
           <SignupButton className="mt-3 w-full max-w-xs text-base font-bold" />
         </section>
 
-        <section aria-labelledby="categories-title" className="mx-auto w-full max-w-4xl px-4 pt-8 pb-12 sm:pt-10">
-          <h2 id="categories-title" className="border-b border-border pb-2 text-xl font-bold sm:text-2xl">
-            Catégories de produits
+        <section aria-labelledby="produits-title" className="mx-auto w-full max-w-4xl px-4 pt-8 pb-12 sm:pt-10">
+          <h2 id="produits-title" className="mb-6 text-xl font-bold sm:text-2xl">
+            Produits du quotidien
           </h2>
-          <Suspense fallback={<CategoryList counts={undefined} />}>
-            <LiveCategoryList />
+          <Suspense fallback={<ProductList counts={undefined} />}>
+            <LiveProductList />
           </Suspense>
-          <div className="mt-4 flex flex-col items-center gap-3 border-t border-border pt-8 text-center">
-            <p className="font-bold">Une de ces catégories vous intéresse&nbsp;?</p>
+          <div className="mt-10 flex flex-col items-center gap-3 border-t border-border pt-8 text-center">
+            <p className="font-bold">Un de ces produits vous intéresse&nbsp;?</p>
             <SignupButton className="w-full max-w-xs text-base font-bold" />
           </div>
         </section>
@@ -78,8 +78,8 @@ async function LiveCountdown() {
   return <CountdownBoard total={stats?.totalEmployees ?? null} />;
 }
 
-async function LiveCategoryList() {
+async function LiveProductList() {
   await connection();
   const stats = await getPublicStats();
-  return <CategoryList counts={stats?.interestsByCategory ?? null} />;
+  return <ProductList counts={stats?.interestsByCategory ?? null} />;
 }

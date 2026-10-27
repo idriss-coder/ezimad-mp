@@ -62,7 +62,7 @@
 /*
  * EZIMAD V2 : page web « à l'ancienne », inspirée d'Amazon classique.
  * Charte tirée du logo : bleu EZIMAD (#0057a8), vert des chevrons (#0a9830), gris.
- * Blanc franc, encre noire, bandeaux marine, boutons bleus, rouge des chiffres et des cœurs.
+ * Blanc franc, encre noire, bandeaux marine, boutons jaunes et orange d'Amazon, rouge des chiffres et des cœurs.
  */
 :root {
   --background: #ffffff;
@@ -162,6 +162,7 @@
 /* Contrôles « à l'ancienne » : boutons Amazon classiques, champs à liseré, liens soulignés. */
 @layer components {
   .btn-primary,
+  .btn-buy,
   .btn-secondary {
     display: inline-flex;
     min-height: 2.75rem;
@@ -177,19 +178,31 @@
     text-decoration: none;
     white-space: nowrap;
   }
-  /* Bouton principal : bleu du logo, texte blanc (6,9:1 sur #0057a8). */
+  /* Bouton principal : jaune Amazon classique, texte noir. */
   .btn-primary {
-    border-color: #004a8f #00427f #003870;
-    background: linear-gradient(to bottom, #1f75c7, #0057a8);
-    color: #ffffff;
-    box-shadow: 0 1px 0 rgb(255 255 255 / 0.25) inset;
+    border-color: #a88734 #9c7e31 #846a29;
+    background: linear-gradient(to bottom, #f7dfa5, #f0c14b);
+    box-shadow: 0 1px 0 rgb(255 255 255 / 0.4) inset;
   }
   .btn-primary:hover {
-    background: linear-gradient(to bottom, #1468b8, #004a8f);
+    background: linear-gradient(to bottom, #f5d78e, #eeb933);
   }
   .btn-primary:active {
-    background: #004a8f;
-    box-shadow: 0 1px 3px rgb(0 0 0 / 0.3) inset;
+    background: #f0c14b;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.2) inset;
+  }
+  /* Bouton des fiches produits : orange « Acheter maintenant », texte noir. */
+  .btn-buy {
+    border-color: #ca7c1b #be751a #a56519;
+    background: linear-gradient(to bottom, #f6c88f, #ed9220);
+    box-shadow: 0 1px 0 rgb(255 255 255 / 0.4) inset;
+  }
+  .btn-buy:hover {
+    background: linear-gradient(to bottom, #f4bf76, #e8870e);
+  }
+  .btn-buy:active {
+    background: #ed9220;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.2) inset;
   }
   .btn-secondary {
     border-color: #adb1b8 #a2a6ac #8d9096;
@@ -203,13 +216,16 @@
     background: #e7e9ec;
     box-shadow: 0 1px 3px rgb(0 0 0 / 0.2) inset;
   }
+  /* Focus orange Amazon. */
   .btn-primary:focus-visible,
+  .btn-buy:focus-visible,
   .btn-secondary:focus-visible {
     outline: none;
-    border-color: #0a9830;
-    box-shadow: 0 0 3px 2px rgb(10 152 48 / 0.45);
+    border-color: #e77600;
+    box-shadow: 0 0 3px 2px rgb(228 121 17 / 0.5);
   }
   .btn-primary:disabled,
+  .btn-buy:disabled,
   .btn-secondary:disabled {
     cursor: progress;
     opacity: 0.6;
