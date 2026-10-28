@@ -6,11 +6,11 @@ brand
 
 ## Users
 
-Salariés des zones industrielles MAGZI (Cameroun), le plus souvent sur mobile, souvent pendant une pause ou le trajet. Ils veulent savoir en quelques secondes ce que le club leur apporte, puis s'inscrire sans effort. Public secondaire : entreprises implantées en zone MAGZI qui cherchent un canal de distribution.
+Salariés des zones industrielles MAGZI (Cameroun), le plus souvent sur mobile, souvent pendant une pause ou le trajet. Ils veulent voir en quelques secondes les prix et réserver sans effort. Public secondaire : entreprises implantées en zone MAGZI qui cherchent un canal de distribution.
 
 ## Product Purpose
 
-Constituer une base de demande qualifiée (objectif 2 000 inscrits) pour négocier des prix préférentiels auprès des producteurs MAGZI. Succès : inscription complète et catégories de produits choisies. (La partie entreprises partenaires est masquée pour l'instant.)
+Faire passer les salariés à l'action : réserver dès maintenant des produits au prix EZIMAD, sans paiement initial, avant la date limite des réductions (décision client du 2026-10-28). L'équipe recontacte chaque réservation sur WhatsApp. Succès : réservation enregistrée (panier + coordonnées), puis réponse au champ libre « autres produits ». (La partie entreprises partenaires est masquée pour l'instant.)
 
 ## Brand Personality
 
@@ -22,11 +22,11 @@ Landing pages modernes « générées par IA » : grandes typos serrées, cartes
 
 ## Design Principles
 
-1. Une page, deux blocs : le compteur en haut, la grille des produits du quotidien en dessous (une rubrique par catégorie, prix EZIMAD estimé + prix du marché barré, bouton orange « Je veux ce prix »). Rien d'autre.
-2. Tout le parcours d'inscription vit dans une boîte de dialogue : informations → catégories → « inscription réussie ».
-3. Chiffres vrais ou rien : compteur et nombre de cœurs issus de la base, jamais de valeur fictive. Prix barrés = prix réellement relevés (source et date dans `src/data/catalog.ts`) ; prix EZIMAD toujours présentés comme des estimations liées à l'objectif d'inscrits.
+1. Une page, deux blocs : le compte à rebours jusqu'à la date limite des réductions en haut (avec « Pas de paiement initial requis »), la grille des produits du quotidien en dessous (une rubrique par catégorie, étoiles, prix EZIMAD avec remise, prix du marché barré, stock restant, « Ajouter au panier »). Rien d'autre.
+2. Panier façon Amazon : compteur dans l'en-tête, barre « Réserver » en bas d'écran, puis tout le parcours dans une boîte de dialogue : panier → coordonnées → « réservation enregistrée » + champ libre « autres produits ». Produit épuisé : liste d'attente.
+3. Urgence assumée (demande client) : date limite, stock restant, produits épuisés. Notes en étoiles et stocks sont des valeurs fixes choisies dans `src/data/catalog.ts`, identiques pour tous, jamais aléatoires à l'affichage. Prix barrés = prix réellement relevés (source et date dans `src/data/catalog.ts`).
 4. Hiérarchie par la taille, la graisse et les filets, pas par la décoration.
-5. Mobile d'abord : le bouton « Je m'inscris » est visible sans défiler.
+5. Mobile d'abord : « Pas de paiement initial requis » et « Voir les produits » visibles sans défiler.
 
 ## Accessibility & Inclusion
 

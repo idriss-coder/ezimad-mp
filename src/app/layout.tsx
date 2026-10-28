@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     template: "%s · EZIMAD",
   },
   description:
-    "Les produits des entreprises MAGZI, à prix préférentiels pour les salariés des zones industrielles. Inscrivez-vous et choisissez vos catégories de produits.",
+    "Les produits des entreprises MAGZI, à prix préférentiels pour les salariés des zones industrielles. Réservez sans paiement initial avant le 30 novembre.",
   openGraph: {
     type: "website",
     locale: "fr_CM",

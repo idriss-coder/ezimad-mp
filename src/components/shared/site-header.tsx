@@ -1,10 +1,12 @@
+import { CartButton } from "@/features/cart/cart-button";
+
 import { Brand } from "./brand";
 
 export function SiteHeader() {
   return (
     <header id="top">
       <div className="bg-nav text-white">
-        <div className="mx-auto flex h-14 max-w-4xl items-center px-3 sm:px-4">
+        <div className="mx-auto flex h-14 max-w-4xl items-center justify-between gap-3 px-3 sm:px-4">
           <a
             href="#top"
             aria-label="EZIMAD, haut de la page"
@@ -12,6 +14,7 @@ export function SiteHeader() {
           >
             <Brand />
           </a>
+          <CartButton />
         </div>
       </div>
     </header>

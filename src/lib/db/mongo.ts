@@ -5,7 +5,10 @@ import { MongoClient, type Db } from "mongodb";
  * doit être préfixée `ezimad_`.
  */
 export const COLLECTIONS = {
+  /** Inscriptions de la V1 (avant le panier) : conservées, plus alimentées. */
   employees: "ezimad_employees",
+  reservations: "ezimad_reservations",
+  waitlist: "ezimad_waitlist",
   partnerLeads: "ezimad_partner_leads",
 } as const;
 
@@ -27,6 +30,14 @@ async function ensureIndexes(db: Db) {
   await Promise.all([
     db.collection(COLLECTIONS.employees).createIndexes([
       { key: { phone: 1 }, name: "phone_unique", unique: true },
+      { key: { createdAt: -1 }, name: "createdAt_desc" },
+    ]),
+    db.collection(COLLECTIONS.reservations).createIndexes([
+      { key: { phone: 1 }, name: "phone" },
+      { key: { createdAt: -1 }, name: "createdAt_desc" },
+    ]),
+    db.collection(COLLECTIONS.waitlist).createIndexes([
+      { key: { productId: 1, phone: 1 }, name: "product_phone_unique", unique: true },
       { key: { createdAt: -1 }, name: "createdAt_desc" },
     ]),
     db.collection(COLLECTIONS.partnerLeads).createIndex({ createdAt: -1 }, { name: "createdAt_desc" }),
