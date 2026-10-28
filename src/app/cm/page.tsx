@@ -51,13 +51,9 @@ export default function CmPage() {
         </section>
 
         <section id="produits" aria-labelledby="produits-title" className="mx-auto w-full max-w-4xl scroll-mt-2 px-4 pt-8 pb-12 sm:pt-10">
-          <h2 id="produits-title" className="text-xl font-bold sm:text-2xl">
+          <h2 id="produits-title" className="mb-6 text-xl font-bold sm:text-2xl">
             Produits du quotidien
           </h2>
-          <p className="mt-2 mb-6 border-l-[3px] border-heart pl-3 text-sm sm:text-base">
-            Commandez avant le <strong>{OFFER_DEADLINE_LABEL}</strong> pour bénéficier des réductions affichées. Stocks
-            limités au prix EZIMAD.
-          </p>
           <ProductList />
         </section>
       </main>
