@@ -52,3 +52,9 @@ export const waitlistSchema = z.object(contactFields);
 
 export type WaitlistInput = z.input<typeof waitlistSchema>;
 export type WaitlistData = z.output<typeof waitlistSchema>;
+
+/** Demande d'autres produits à prix réduit, en bas de la liste : produits souhaités puis coordonnées. */
+export const productRequestSchema = z.object({ products: otherProductsSchema, ...contactFields });
+
+export type ProductRequestInput = z.input<typeof productRequestSchema>;
+export type ProductRequestData = z.output<typeof productRequestSchema>;

@@ -1,5 +1,5 @@
 /**
- * Catégories de produits : une rubrique par catégorie dans la liste de la page.
+ * Catégories de produits : plus affichées sur la page (tous les produits sont dans une seule grille).
  *
  * Les ids sont stockés en base (`ezimad_employees.categories`, inscriptions de la V1) : ne pas les renommer,
  * en ajouter de nouveaux. Photos carrées servies depuis `public/categories/`.

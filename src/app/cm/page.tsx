@@ -8,6 +8,7 @@ import { NoPaymentNotice } from "@/features/cart/no-payment-notice";
 import { ShopProvider } from "@/features/cart/shop-provider";
 import { CountdownBackdrop } from "@/features/offer/countdown-backdrop";
 import { DeadlineCountdown } from "@/features/offer/deadline-countdown";
+import { ProductRequestSection } from "@/features/product-requests/product-request-section";
 import { ProductList } from "@/features/products/product-list";
 
 export const metadata: Metadata = {
@@ -55,6 +56,7 @@ export default function CmPage() {
             Produits du quotidien
           </h2>
           <ProductList />
+          <ProductRequestSection />
         </section>
       </main>
       <SiteFooter />

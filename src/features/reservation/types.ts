@@ -39,3 +39,13 @@ export type WaitlistDoc = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type ProductRequestDoc = {
+  _id: ObjectId;
+  /** Produits souhaités, saisis librement. */
+  products: string;
+  fullName: string;
+  phone: string;
+  consentAt: Date;
+  createdAt: Date;
+};

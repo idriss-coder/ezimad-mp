@@ -9,6 +9,8 @@ export const COLLECTIONS = {
   employees: "ezimad_employees",
   reservations: "ezimad_reservations",
   waitlist: "ezimad_waitlist",
+  /** Demandes « Vous ne trouvez pas le produit qui vous intéresse ? ». */
+  productRequests: "ezimad_product_requests",
   partnerLeads: "ezimad_partner_leads",
 } as const;
 
@@ -38,6 +40,10 @@ async function ensureIndexes(db: Db) {
     ]),
     db.collection(COLLECTIONS.waitlist).createIndexes([
       { key: { productId: 1, phone: 1 }, name: "product_phone_unique", unique: true },
+      { key: { createdAt: -1 }, name: "createdAt_desc" },
+    ]),
+    db.collection(COLLECTIONS.productRequests).createIndexes([
+      { key: { phone: 1 }, name: "phone" },
       { key: { createdAt: -1 }, name: "createdAt_desc" },
     ]),
     db.collection(COLLECTIONS.partnerLeads).createIndex({ createdAt: -1 }, { name: "createdAt_desc" }),

@@ -10,15 +10,17 @@ import { normalizePhone } from "@/lib/phone";
 
 import {
   otherProductsSchema,
+  productRequestSchema,
   reservationItemsSchema,
   reservationSchema,
   utmSchema,
   waitlistSchema,
+  type ProductRequestInput,
   type ReservationInput,
   type ReservationItemInput,
   type WaitlistInput,
 } from "./schema";
-import type { ReservationDoc, ReservationItem, WaitlistDoc } from "./types";
+import type { ProductRequestDoc, ReservationDoc, ReservationItem, WaitlistDoc } from "./types";
 
 type FieldErrors<T> = Partial<Record<keyof T, string>>;
 type Failure<T> = { ok: false; error: string; fieldErrors?: FieldErrors<T> };
@@ -28,6 +30,8 @@ export type ReserveResult =
   | Failure<ReservationInput>;
 
 export type WaitlistResult = { ok: true; fullName: string; status: "created" | "updated" } | Failure<WaitlistInput>;
+
+export type ProductRequestResult = { ok: true; fullName: string } | Failure<ProductRequestInput>;
 
 export type OtherProductsResult = { ok: true } | { ok: false; error: string };
 
@@ -173,6 +177,32 @@ export async function joinWaitlist(productId: string, input: WaitlistInput): Pro
     return { ok: true, fullName: data.fullName, status: result.upsertedCount > 0 ? "created" : "updated" };
   } catch (error) {
     logFailure("joinWaitlist", error);
+    return { ok: false, error: UNAVAILABLE };
+  }
+}
+
+/** « Vous ne trouvez pas le produit qui vous intéresse ? » : produits souhaités + coordonnées. */
+export async function requestProducts(input: ProductRequestInput): Promise<ProductRequestResult> {
+  const parsed = productRequestSchema.safeParse(input);
+  if (!parsed.success) {
+    return { ok: false, error: "Vérifiez les champs signalés.", fieldErrors: fieldErrorsOf(parsed.error) };
+  }
+  const data = parsed.data;
+  if (data.website) return { ok: true, fullName: data.fullName };
+
+  const now = new Date();
+  try {
+    const requests = (await getDb()).collection<Omit<ProductRequestDoc, "_id">>(COLLECTIONS.productRequests);
+    await requests.insertOne({
+      products: data.products,
+      fullName: data.fullName,
+      phone: normalizePhone(data.phone)!,
+      consentAt: now,
+      createdAt: now,
+    });
+    return { ok: true, fullName: data.fullName };
+  } catch (error) {
+    logFailure("requestProducts", error);
     return { ok: false, error: UNAVAILABLE };
   }
 }
