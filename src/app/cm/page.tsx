@@ -10,7 +10,7 @@ import { ProductRequestSection } from "@/features/product-requests/product-reque
 import { ProductList } from "@/features/products/product-list";
 
 export const metadata: Metadata = {
-  title: { absolute: "Ezimarket — Prix préférentiels pour les salariés des zones MAGZI" },
+  title: { absolute: "Ezimarket — Prix préférentiels pour les salariés des Zones Industrielles MAGZI de Douala" },
   alternates: { canonical: "/cm" },
 };
 
@@ -32,7 +32,7 @@ export default function CmPage() {
             id="offre-title"
             className="mx-auto max-w-3xl text-[clamp(1.375rem,4.2vw,2.125rem)] leading-tight font-bold text-balance"
           >
-            Les produits des entreprises MAGZI, à prix préférentiels pour les salariés des zones industrielles.
+            Les produits des entreprises des Zones Industrielles MAGZI de Douala, à prix préférentiels pour les salariés.
           </h1>
           <p className="mx-auto mt-3 max-w-2xl text-pretty sm:text-lg">
             Réservez vos packs au prix Ezimarket et économisez sur chaque produit.

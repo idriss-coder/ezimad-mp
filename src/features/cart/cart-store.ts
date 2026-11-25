@@ -2,7 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 
-import { findProduct, MAX_QUANTITY, PRODUCTS, savingsOf, type Product } from "@/data/catalog";
+import { findProduct, isPriced, MAX_QUANTITY, PRODUCTS, savingsOf, type Product } from "@/data/catalog";
 
 /** Panier : id produit → nombre de packs. Gardé dans le navigateur (localStorage), propre à chaque appareil. */
 export type CartItems = Record<string, number>;
@@ -88,7 +88,7 @@ export function clearCart() {
   commit(EMPTY);
 }
 
-/** Lignes du panier dans l'ordre du catalogue, avec les totaux. */
+/** Lignes du panier dans l'ordre du catalogue, avec les totaux. `unpriced` : packs au prix à confirmer, hors total. */
 export function cartSummary(cart: CartItems) {
   const lines: CartLine[] = PRODUCTS.filter((product) => cart[product.id]).map((product) => ({
     product,
@@ -97,10 +97,15 @@ export function cartSummary(cart: CartItems) {
   let count = 0;
   let total = 0;
   let savings = 0;
+  let unpriced = 0;
   for (const { product, quantity } of lines) {
     count += quantity;
+    if (!isPriced(product)) {
+      unpriced += quantity;
+      continue;
+    }
     total += product.targetPrice * quantity;
     savings += savingsOf(product) * quantity;
   }
-  return { lines, count, total, savings };
+  return { lines, count, total, savings, unpriced };
 }

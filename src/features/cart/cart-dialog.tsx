@@ -6,6 +6,7 @@ import { useForm, type DefaultValues } from "react-hook-form";
 
 import { Modal, ModalFooter } from "@/components/shared/modal";
 import { DialogClose } from "@/components/ui/dialog";
+import { isPriced } from "@/data/catalog";
 import { formatFcfa } from "@/lib/format";
 import { ProductPhoto } from "@/features/products/product-photo";
 import { ReservationDone } from "@/features/reservation/reservation-done";
@@ -74,7 +75,7 @@ export function CartDialog({ open, onOpenChange }: { open: boolean; onOpenChange
 
 function CartView({ onReserve, focusOnMount }: { onReserve: () => void; focusOnMount: boolean }) {
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const { lines, count, total, savings } = cartSummary(useCartItems());
+  const { lines, count, total, savings, unpriced } = cartSummary(useCartItems());
 
   // Retour depuis les coordonnées : le focus revient sur le titre (à l'ouverture, c'est le dialogue qui le place).
   useEffect(() => {
@@ -122,10 +123,16 @@ function CartView({ onReserve, focusOnMount }: { onReserve: () => void; focusOnM
                 <div className="mt-1 flex flex-wrap items-center justify-between gap-2">
                   <QuantityStepper product={product} quantity={quantity} className="w-32" />
                   <p className="text-right leading-tight">
-                    <strong className="block whitespace-nowrap">{formatFcfa(product.targetPrice * quantity)}</strong>
-                    <s className="text-[0.8125rem] whitespace-nowrap text-muted-foreground">
-                      {formatFcfa(product.marketPrice * quantity)}
-                    </s>
+                    {isPriced(product) ? (
+                      <>
+                        <strong className="block whitespace-nowrap">{formatFcfa(product.targetPrice * quantity)}</strong>
+                        <s className="text-[0.8125rem] whitespace-nowrap text-muted-foreground">
+                          {formatFcfa(product.marketPrice * quantity)}
+                        </s>
+                      </>
+                    ) : (
+                      <strong className="block whitespace-nowrap">Prix à confirmer</strong>
+                    )}
                   </p>
                 </div>
               </div>
@@ -134,9 +141,16 @@ function CartView({ onReserve, focusOnMount }: { onReserve: () => void; focusOnM
         </ul>
 
         <p className="mt-4 text-right text-lg">
-          Sous-total ({count} pack{count > 1 ? "s" : ""})&nbsp;: <strong className="whitespace-nowrap">{formatFcfa(total)}</strong>
+          Sous-total ({count} pack{count > 1 ? "s" : ""})&nbsp;: <strong className="whitespace-nowrap">{total > 0 ? formatFcfa(total) : "prix à confirmer"}</strong>
         </p>
-        <p className="text-right text-sm font-bold text-success">Vous économisez {formatFcfa(savings)}</p>
+        {savings > 0 && (
+          <p className="text-right text-sm font-bold text-success">Vous économisez {formatFcfa(savings)}</p>
+        )}
+        {unpriced > 0 && (
+          <p className="text-right text-sm text-muted-foreground">
+            {unpriced} pack{unpriced > 1 ? "s" : ""} hors sous-total&nbsp;: prix confirmé sur WhatsApp avant tout paiement.
+          </p>
+        )}
 
         <NoPaymentNotice className="mt-4" />
       </div>

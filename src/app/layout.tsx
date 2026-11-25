@@ -4,11 +4,11 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: {
-    default: "Ezimarket — Prix préférentiels pour les salariés MAGZI",
+    default: "Ezimarket — Prix préférentiels pour les salariés des Zones Industrielles MAGZI de Douala",
     template: "%s · Ezimarket",
   },
   description:
-    "Les produits des entreprises MAGZI, à prix préférentiels pour les salariés des zones industrielles. Réservez vos packs sans paiement initial.",
+    "Les produits des entreprises des Zones Industrielles MAGZI de Douala, à prix préférentiels pour les salariés. Réservez vos packs sans paiement initial.",
   openGraph: {
     type: "website",
     locale: "fr_CM",

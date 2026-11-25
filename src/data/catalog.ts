@@ -59,11 +59,13 @@ export const CATEGORY_IDS = CATEGORIES.map((c) => c.id) as [CategoryId, ...Categ
 export const MAX_QUANTITY = 10;
 
 /**
- * Catalogue de lancement : 20 produits, dont 1 masqué, vendus en pack (fichier client du 24/11/2026).
+ * Catalogue de lancement : 20 produits, dont 1 masqué, vendus en pack (fichier client du 24/11/2026),
+ * plus 3 produits Novia (demande client du 25/11/2026) dont les prix et le contenu du pack restent à fournir par le client.
  *
  * `marketPrice` : prix du marché pour la même quantité achetée au détail (prix barré). Ce sont des références
  * fournies par le client, pas des relevés : le fichier source demande de les valider avant publication.
  * `targetPrice` : prix Ezimarket du pack. Montants en FCFA.
+ * Les deux à `null` : prix pas encore fixé, la fiche affiche « Prix à confirmer ». Ne pas mettre de prix estimé.
  * Les prix d'achat et les marges du fichier source ne doivent jamais figurer ici : ce module est envoyé au navigateur.
  *
  * Les ids sont stockés dans les réservations : ne pas les réutiliser pour un autre produit.
@@ -83,11 +85,14 @@ export type Product = {
   imageAlt: string;
   /** La photo montre le produit en général, pas l’emballage réel : mention « Photo d’illustration ». */
   illustration?: boolean;
-  /** Prix du marché pour tout le pack (barré). */
-  marketPrice: number;
-  /** Prix Ezimarket du pack. */
-  targetPrice: number;
+  /** Prix du marché pour tout le pack (barré) ; `null` tant que le client ne l'a pas fourni. */
+  marketPrice: number | null;
+  /** Prix Ezimarket du pack ; `null` tant que le client ne l'a pas fourni. */
+  targetPrice: number | null;
 };
+
+/** Produit dont les deux prix sont connus. */
+export type PricedProduct = Product & { marketPrice: number; targetPrice: number };
 
 export const PRODUCTS = [
   {
@@ -300,14 +305,50 @@ export const PRODUCTS = [
     marketPrice: 4500,
     targetPrice: 3900,
   },
+  {
+    id: "ezm-021",
+    name: "Huile raffinée Oléo (Novia)",
+    format: "Bidon de 5 L",
+    packSize: 1,
+    unit: "bidon",
+    image: "/products/huile-oleo-5l.jpg",
+    imageAlt: "Bidon d’huile Oléo de 5 litres",
+    marketPrice: null,
+    targetPrice: null,
+  },
+  {
+    id: "ezm-022",
+    name: "Chocolat à tartiner Yummy (Novia)",
+    format: "Barquette de 800 g, cacao et arachide",
+    packSize: 1,
+    unit: "barquette",
+    image: "/products/chocolat-yummy-800g.jpg",
+    imageAlt: "Barquette de chocolat à tartiner Yummy cacao et arachide",
+    marketPrice: null,
+    targetPrice: null,
+  },
+  {
+    id: "ezm-023",
+    name: "Savon de Marseille Jazz (Novia)",
+    format: "Savon de 200 g",
+    packSize: 1,
+    unit: "savon",
+    image: "/products/savon-jazz-200g.jpg",
+    imageAlt: "Savon de Marseille Jazz de 200 g",
+    marketPrice: null,
+    targetPrice: null,
+  },
 ] as const satisfies readonly Product[];
 
 export type ProductId = (typeof PRODUCTS)[number]["id"];
 
 export const findProduct = (id: string): Product | undefined => PRODUCTS.find((product) => product.id === id);
 
+export const isPriced = (product: Product): product is PricedProduct =>
+  product.marketPrice !== null && product.targetPrice !== null;
+
 /** Ce que l'on économise sur un pack par rapport au prix du marché. */
-export const savingsOf = (product: Product) => product.marketPrice - product.targetPrice;
+export const savingsOf = (product: PricedProduct) => product.marketPrice - product.targetPrice;
 
 /** Prix Ezimarket ramené à un article du pack, arrondi au franc. */
-export const unitPriceOf = (product: Product) => Math.round(product.targetPrice / product.packSize);
+export const unitPriceOf = (product: PricedProduct) => Math.round(product.targetPrice / product.packSize);

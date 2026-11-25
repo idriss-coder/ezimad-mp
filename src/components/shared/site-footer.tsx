@@ -10,7 +10,7 @@ export function SiteFooter() {
         <div className="mx-auto grid max-w-4xl gap-6 px-4 py-8 sm:grid-cols-[1fr_2fr] sm:gap-10">
           <div>
             <Brand />
-            <p className="mt-2 text-sm text-[#dddddd]">Prix préférentiels pour les salariés des zones MAGZI.</p>
+            <p className="mt-2 text-sm text-[#dddddd]">Prix préférentiels pour les salariés des Zones Industrielles MAGZI de Douala.</p>
           </div>
           <div id="confidentialite">
             <h2 className="font-bold">Confidentialité</h2>

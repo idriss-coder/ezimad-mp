@@ -22,7 +22,7 @@ Landing pages modernes « générées par IA » : grandes typos serrées, cartes
 
 ## Design Principles
 
-1. Une page, deux blocs : le titre en haut (avec « Pas de paiement initial requis »), la grille des produits en pack en dessous. Une fiche = photo, nom, contenu du pack, prix du marché barré, prix Ezimarket du pack (avec le prix à l'unité), économie en FCFA, « Ajouter au panier ». Rien d'autre.
+1. Une page, deux blocs : le titre en haut (avec « Pas de paiement initial requis »), la grille des produits en pack en dessous. Une fiche = photo, nom, contenu du pack, prix du marché barré, prix Ezimarket du pack (avec le prix à l'unité), économie en FCFA, « Ajouter au panier ». Rien d'autre. Produit sans prix fourni par le client : « À confirmer », jamais de prix estimé.
 2. Panier façon Amazon : compteur dans l'en-tête, barre « Réserver » en bas d'écran, puis tout le parcours dans une boîte de dialogue : panier → coordonnées → « réservation enregistrée » + champ libre « autres produits ».
 3. Pas d'urgence (décision client du 2026-11-25) : ni compteur, ni date limite, ni stock, ni « épuisé », ni étoiles. Seuls le prix et l'économie parlent. Prix barrés = références du catalogue client du 2026-11-24, à valider par un relevé avant publication. Prix d'achat et marges ne sont jamais envoyés au navigateur.
 4. Hiérarchie par la taille, la graisse et les filets, pas par la décoration.

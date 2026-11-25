@@ -54,9 +54,15 @@ export function ReservationDone({ reserved }: { reserved: Reserved }) {
               Réservation enregistrée
             </h3>
             <p className="mt-1">
-              Merci {reserved.fullName}. Vos {reserved.count} pack{reserved.count > 1 ? "s" : ""} (
-              {formatFcfa(reserved.total)}) sont réservés au prix Ezimarket.
+              Merci {reserved.fullName}. Vos {reserved.count} pack{reserved.count > 1 ? "s" : ""}
+              {reserved.total > 0 && ` (${formatFcfa(reserved.total)})`} sont réservés au prix Ezimarket.
             </p>
+            {reserved.unpriced > 0 && (
+              <p className="mt-1 text-sm">
+                Le prix de {reserved.unpriced} pack{reserved.unpriced > 1 ? "s" : ""} reste à confirmer&nbsp;: nous vous
+                l’envoyons sur WhatsApp, et vous pourrez alors accepter ou refuser.
+              </p>
+            )}
           </div>
         </div>
 

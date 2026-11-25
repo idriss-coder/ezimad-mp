@@ -41,7 +41,7 @@ export function CartButton() {
  */
 export function CartBar() {
   const { openCart } = useShop();
-  const { count, total } = cartSummary(useCartItems());
+  const { count, total, unpriced } = cartSummary(useCartItems());
   if (count === 0) return null;
 
   return (
@@ -53,7 +53,10 @@ export function CartBar() {
             <span className="block text-sm text-muted-foreground">
               Sous-total ({count} pack{count > 1 ? "s" : ""})
             </span>
-            <strong className="text-lg whitespace-nowrap">{formatFcfa(total)}</strong>
+            <strong className="text-lg whitespace-nowrap">{total > 0 ? formatFcfa(total) : "Prix à confirmer"}</strong>
+            {total > 0 && unpriced > 0 && (
+              <span className="block text-[0.8125rem] text-muted-foreground">+ {unpriced} à confirmer</span>
+            )}
           </p>
           <button type="button" onClick={openCart} className="btn-buy px-6 font-bold">
             Réserver

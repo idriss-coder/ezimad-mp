@@ -24,7 +24,7 @@ type FieldErrors<T> = Partial<Record<keyof T, string>>;
 type Failure<T> = { ok: false; error: string; fieldErrors?: FieldErrors<T> };
 
 export type ReserveResult =
-  | { ok: true; reservationId: string; fullName: string; phone: string; count: number; total: number }
+  | { ok: true; reservationId: string; fullName: string; phone: string; count: number; total: number; unpriced: number }
   | Failure<ReservationInput>;
 
 export type ProductRequestResult = { ok: true; fullName: string } | Failure<ProductRequestInput>;
@@ -76,11 +76,12 @@ export async function reserve(
     });
   }
   const count = items.reduce((sum, item) => sum + item.quantity, 0);
-  const total = items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
+  const total = items.reduce((sum, item) => sum + (item.unitPrice ?? 0) * item.quantity, 0);
+  const unpriced = items.reduce((sum, item) => sum + (item.unitPrice === null ? item.quantity : 0), 0);
 
   const phone = normalizePhone(data.phone)!;
   // Honeypot rempli : on simule un succès sans rien écrire.
-  if (data.website) return { ok: true, reservationId: new ObjectId().toHexString(), fullName: data.fullName, phone, count, total };
+  if (data.website) return { ok: true, reservationId: new ObjectId().toHexString(), fullName: data.fullName, phone, count, total, unpriced };
 
   const company = findCompany(data.companyId);
   const parsedUtm = utmSchema.safeParse(utm);
@@ -109,7 +110,7 @@ export async function reserve(
       },
       { ignoreUndefined: true },
     );
-    return { ok: true, reservationId: insertedId.toHexString(), fullName: data.fullName, phone, count, total };
+    return { ok: true, reservationId: insertedId.toHexString(), fullName: data.fullName, phone, count, total, unpriced };
   } catch (error) {
     logFailure("reserve", error);
     return { ok: false, error: UNAVAILABLE };

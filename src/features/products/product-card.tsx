@@ -1,6 +1,6 @@
 "use client";
 
-import { savingsOf, unitPriceOf, type Product } from "@/data/catalog";
+import { isPriced, savingsOf, unitPriceOf, type Product } from "@/data/catalog";
 import { formatFcfa, formatNumber } from "@/lib/format";
 import { setQuantity, useCartItems } from "@/features/cart/cart-store";
 import { QuantityStepper } from "@/features/cart/quantity-stepper";
@@ -35,20 +35,32 @@ export function ProductCard({ product, eager }: { product: Product; eager: boole
 
       {/* Les prix restent groupés en bas de la fiche : ils s'alignent d'une fiche à l'autre. */}
       <div className="mt-auto pt-3">
-        <p className="text-[0.8125rem] leading-snug text-muted-foreground">
-          Prix du marché&nbsp;: <s className="whitespace-nowrap">{formatFcfa(product.marketPrice)}</s>
-        </p>
-        <p className="mt-2 text-[0.8125rem] leading-tight font-bold text-success">Prix Ezimarket</p>
-        <p className="mt-0.5 leading-none whitespace-nowrap">
-          <span className="text-2xl font-bold tabular-nums">{formatNumber(product.targetPrice)}</span>
-          <span className="text-sm font-bold">&nbsp;FCFA</span>
-        </p>
-        <p className="mt-1 text-[0.8125rem] leading-snug whitespace-nowrap text-muted-foreground">
-          {formatFcfa(unitPriceOf(product))} / {product.unit}
-        </p>
-        <p className="mt-2.5 rounded-[2px] bg-savings px-1.5 py-1 text-center text-[0.8125rem] leading-tight font-bold text-white">
-          Vous économisez <span className="whitespace-nowrap">{formatFcfa(savingsOf(product))}</span>
-        </p>
+        {isPriced(product) ? (
+          <>
+            <p className="text-[0.8125rem] leading-snug text-muted-foreground">
+              Prix du marché&nbsp;: <s className="whitespace-nowrap">{formatFcfa(product.marketPrice)}</s>
+            </p>
+            <p className="mt-2 text-[0.8125rem] leading-tight font-bold text-success">Prix Ezimarket</p>
+            <p className="mt-0.5 leading-none whitespace-nowrap">
+              <span className="text-2xl font-bold tabular-nums">{formatNumber(product.targetPrice)}</span>
+              <span className="text-sm font-bold">&nbsp;FCFA</span>
+            </p>
+            <p className="mt-1 text-[0.8125rem] leading-snug whitespace-nowrap text-muted-foreground">
+              {formatFcfa(unitPriceOf(product))} / {product.unit}
+            </p>
+            <p className="mt-2.5 rounded-[2px] bg-savings px-1.5 py-1 text-center text-[0.8125rem] leading-tight font-bold text-white">
+              Vous économisez <span className="whitespace-nowrap">{formatFcfa(savingsOf(product))}</span>
+            </p>
+          </>
+        ) : (
+          <>
+            <p className="text-[0.8125rem] leading-tight font-bold text-success">Prix Ezimarket</p>
+            <p className="mt-0.5 text-lg leading-tight font-bold">À confirmer</p>
+            <p className="mt-1 text-[0.8125rem] leading-snug text-muted-foreground">
+              Nous vous l’envoyons sur WhatsApp avant tout paiement.
+            </p>
+          </>
+        )}
 
         <div className="mt-3">
           {quantity > 0 ? (

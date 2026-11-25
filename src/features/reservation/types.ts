@@ -5,9 +5,9 @@ export type ReservationItem = {
   name: string;
   format: string;
   quantity: number;
-  /** Prix Ezimarket d’un pack au moment de la réservation (FCFA). */
-  unitPrice: number;
-  marketPrice: number;
+  /** Prix Ezimarket d’un pack au moment de la réservation (FCFA) ; `null` : prix à confirmer. */
+  unitPrice: number | null;
+  marketPrice: number | null;
 };
 
 export type ReservationDoc = {
@@ -18,7 +18,7 @@ export type ReservationDoc = {
   companyName: string;
   magziZone: string;
   items: ReservationItem[];
-  /** Total au prix Ezimarket (FCFA). Rien n'est payé à la réservation. */
+  /** Total au prix Ezimarket (FCFA). Rien n'est payé à la réservation. Hors produits au prix à confirmer. */
   total: number;
   /** Réponse libre « quels autres produits vous intéresseraient ? », posée après la réservation. */
   otherProducts?: string;

@@ -43,7 +43,7 @@ export function ReservationForm({ form, cart, onBack, onDone }: Props) {
   const [pending, startTransition] = useTransition();
   const [formError, setFormError] = useState<string | null>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const { count, total } = cartSummary(cart);
+  const { count, total, unpriced } = cartSummary(cart);
 
   const {
     register,
@@ -75,7 +75,8 @@ export function ReservationForm({ form, cart, onBack, onDone }: Props) {
           Vos coordonnées
         </h3>
         <p className="mt-1 mb-4 text-sm text-muted-foreground">
-          {count} pack{count > 1 ? "s" : ""} · <strong className="text-foreground">{formatFcfa(total)}</strong> ·
+          {count} pack{count > 1 ? "s" : ""} · <strong className="text-foreground">{total > 0 ? formatFcfa(total) : "prix à confirmer"}</strong>
+          {total > 0 && unpriced > 0 && ` (+ ${unpriced} à confirmer)`} ·
           aucun paiement maintenant.
         </p>
 
