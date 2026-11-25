@@ -92,7 +92,7 @@ function CartView({ onReserve, focusOnMount }: { onReserve: () => void; focusOnM
       <>
         <div className="px-4 py-5 sm:px-5">
           {heading}
-          <p className="mt-1">Ajoutez des produits pour les réserver au prix EZIMAD.</p>
+          <p className="mt-1">Ajoutez des produits pour les réserver au prix Ezimarket.</p>
         </div>
         <ModalFooter>
           <DialogClose className="btn-primary w-full sm:w-auto">Voir les produits</DialogClose>

@@ -1,4 +1,4 @@
-# EZIMAD-MP — Plan d'implémentation MVP (vitrine)
+# Ezimarket — Plan d'implémentation MVP (vitrine)
 
 > Source de vérité de la tâche. Mise à jour au fil des lots.
 

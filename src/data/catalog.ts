@@ -63,7 +63,7 @@ export const MAX_QUANTITY = 10;
  *
  * `marketPrice` : prix du marché pour la même quantité achetée au détail (prix barré). Ce sont des références
  * fournies par le client, pas des relevés : le fichier source demande de les valider avant publication.
- * `targetPrice` : prix EZIMAD du pack. Montants en FCFA.
+ * `targetPrice` : prix Ezimarket du pack. Montants en FCFA.
  * Les prix d'achat et les marges du fichier source ne doivent jamais figurer ici : ce module est envoyé au navigateur.
  *
  * Les ids sont stockés dans les réservations : ne pas les réutiliser pour un autre produit.
@@ -85,7 +85,7 @@ export type Product = {
   illustration?: boolean;
   /** Prix du marché pour tout le pack (barré). */
   marketPrice: number;
-  /** Prix EZIMAD du pack. */
+  /** Prix Ezimarket du pack. */
   targetPrice: number;
 };
 
@@ -288,7 +288,7 @@ export const PRODUCTS = [
     marketPrice: 2600,
     targetPrice: 2100,
   },
-  // ezm-019 (Riz Princesse, pack de 2 sacs de 25 kg, marché 30000, EZIMAD 26500) : masqué faute de photo du vrai sac (demande client du 2026-11-25).
+  // ezm-019 (Riz Princesse, pack de 2 sacs de 25 kg, marché 30000, Ezimarket 26500) : masqué faute de photo du vrai sac (demande client du 2026-11-25).
   {
     id: "ezm-020",
     name: "Sucre cristallisé",
@@ -309,5 +309,5 @@ export const findProduct = (id: string): Product | undefined => PRODUCTS.find((p
 /** Ce que l'on économise sur un pack par rapport au prix du marché. */
 export const savingsOf = (product: Product) => product.marketPrice - product.targetPrice;
 
-/** Prix EZIMAD ramené à un article du pack, arrondi au franc. */
+/** Prix Ezimarket ramené à un article du pack, arrondi au franc. */
 export const unitPriceOf = (product: Product) => Math.round(product.targetPrice / product.packSize);

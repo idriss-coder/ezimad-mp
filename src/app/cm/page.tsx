@@ -10,7 +10,7 @@ import { ProductRequestSection } from "@/features/product-requests/product-reque
 import { ProductList } from "@/features/products/product-list";
 
 export const metadata: Metadata = {
-  title: { absolute: "EZIMAD — Prix préférentiels pour les salariés des zones MAGZI" },
+  title: { absolute: "Ezimarket — Prix préférentiels pour les salariés des zones MAGZI" },
   alternates: { canonical: "/cm" },
 };
 
@@ -35,7 +35,7 @@ export default function CmPage() {
             Les produits des entreprises MAGZI, à prix préférentiels pour les salariés des zones industrielles.
           </h1>
           <p className="mx-auto mt-3 max-w-2xl text-pretty sm:text-lg">
-            Réservez vos packs au prix EZIMAD et économisez sur chaque produit.
+            Réservez vos packs au prix Ezimarket et économisez sur chaque produit.
           </p>
           <NoPaymentNotice className="mx-auto mt-6 max-w-md" />
           <a href="#produits" className="btn-buy mt-5 w-full max-w-xs text-base font-bold">

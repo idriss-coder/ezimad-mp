@@ -55,7 +55,7 @@ export function ReservationDone({ reserved }: { reserved: Reserved }) {
             </h3>
             <p className="mt-1">
               Merci {reserved.fullName}. Vos {reserved.count} pack{reserved.count > 1 ? "s" : ""} (
-              {formatFcfa(reserved.total)}) sont réservés au prix EZIMAD.
+              {formatFcfa(reserved.total)}) sont réservés au prix Ezimarket.
             </p>
           </div>
         </div>
@@ -71,12 +71,12 @@ export function ReservationDone({ reserved }: { reserved: Reserved }) {
         <div className="mt-6 border-t border-border pt-5">
           {sent ? (
             <p role="status" className="font-bold text-success">
-              Merci, c’est noté. Nous vous préviendrons si ces produits arrivent sur EZIMAD.
+              Merci, c’est noté. Nous vous préviendrons si ces produits arrivent sur Ezimarket.
             </p>
           ) : (
             <div className="flex flex-col gap-1.5">
               <label htmlFor="otherProducts" className="font-bold">
-                Quels autres produits aimeriez-vous trouver sur EZIMAD&nbsp;?
+                Quels autres produits aimeriez-vous trouver sur Ezimarket&nbsp;?
               </label>
               <p id="otherProducts-hint" className="text-[0.8125rem] text-muted-foreground">
                 Marques, formats… écrivez librement.

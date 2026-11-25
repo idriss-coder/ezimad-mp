@@ -1,7 +1,7 @@
 import { MongoClient, type Db } from "mongodb";
 
 /**
- * Base partagée avec d'autres projets : toute collection EZIMAD
+ * Base partagée avec d'autres projets : toute collection Ezimarket
  * doit être préfixée `ezimad_`.
  */
 export const COLLECTIONS = {
@@ -16,8 +16,8 @@ export const COLLECTIONS = {
 } as const;
 
 type GlobalMongo = { client?: Promise<MongoClient>; indexes?: Promise<void> };
-const globalMongo = globalThis as typeof globalThis & { __ezimadMongo?: GlobalMongo };
-const cache: GlobalMongo = (globalMongo.__ezimadMongo ??= {});
+const globalMongo = globalThis as typeof globalThis & { __ezimarketMongo?: GlobalMongo };
+const cache: GlobalMongo = (globalMongo.__ezimarketMongo ??= {});
 
 function getClient() {
   const uri = process.env.MONGODB_URI;

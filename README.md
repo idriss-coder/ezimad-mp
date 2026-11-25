@@ -1,7 +1,7 @@
-# EZIMAD-MP — Vitrine salariés MAGZI
+# Ezimarket — Vitrine salariés MAGZI
 
 Landing `/cm` au style volontairement « web d'avant » (inspiré d'Amazon classique) qui constitue une base de
-demande qualifiée : catalogue de produits vendus en pack (prix du marché barré, prix EZIMAD, économie), panier et
+demande qualifiée : catalogue de produits vendus en pack (prix du marché barré, prix Ezimarket, économie), panier et
 réservation sans paiement dans une boîte de dialogue, et proposition libre d'autres produits. La section entreprises partenaires est masquée (code conservé dans `src/features/partner-leads`).
 Le back-office n'est pas encore construit (voir `docs/`).
 
@@ -30,7 +30,7 @@ Vérifications : `npx tsc --noEmit`, `npm run lint`, `npm run build`.
 
 ## MongoDB
 
-La base est **partagée avec un autre projet** : toutes les collections EZIMAD sont préfixées `ezimad_`.
+La base est **partagée avec un autre projet** : toutes les collections Ezimarket sont préfixées `ezimad_`.
 
 - `ezimad_employees` — salariés (index unique sur `phone` en E.164, index `createdAt`)
 - `ezimad_partner_leads` — demandes des entreprises partenaires (index `createdAt`)
@@ -42,7 +42,7 @@ la fiche existante (aucun doublon) ; ses catégories sont remplacées par le der
 
 - `src/data/magzi-companies.ts` — liste officielle des entreprises et zones (les entrées `temporary`
   ne s'affichent qu'en développement ; la saisie libre reste toujours possible).
-- `src/data/catalog.ts` — produits en pack (prix du marché, prix EZIMAD, photo dans `public/products/`). Les ids sont
+- `src/data/catalog.ts` — produits en pack (prix du marché, prix Ezimarket, photo dans `public/products/`). Les ids sont
   stockés dans les réservations : ne pas les réutiliser. `illustration: true` signale une photo
   générique : à remplacer par l'emballage réel dans `public/products/`, puis retirer le champ.
 

@@ -41,7 +41,7 @@ export async function submitPartnerLead(input: PartnerLeadInput): Promise<Partne
     }, { ignoreUndefined: true });
     return { ok: true };
   } catch (error) {
-    console.error("[ezimad] submitPartnerLead failed", (error as Error).name);
+    console.error("[ezimarket] submitPartnerLead failed", (error as Error).name);
     return { ok: false, error: "Le service est momentanément indisponible. Réessayez dans un instant." };
   }
 }

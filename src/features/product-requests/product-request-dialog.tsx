@@ -15,7 +15,7 @@ import {
   type ProductRequestInput,
 } from "@/features/reservation/schema";
 
-const PHONE_HINT = "Nous vous écrirons sur ce numéro si ces produits arrivent sur EZIMAD.";
+const PHONE_HINT = "Nous vous écrirons sur ce numéro si ces produits arrivent sur Ezimarket.";
 
 const EMPTY: DefaultValues<ProductRequestInput> = { products: "", fullName: "", phone: "", consent: false, website: "" };
 
@@ -191,7 +191,7 @@ function RequestDone({ requested, products }: { requested: Requested; products: 
             Demande enregistrée
           </h3>
           <p className="mt-1">
-            Merci {requested.fullName}. Nous vous préviendrons sur WhatsApp si ces produits arrivent sur EZIMAD&nbsp;:
+            Merci {requested.fullName}. Nous vous préviendrons sur WhatsApp si ces produits arrivent sur Ezimarket&nbsp;:
           </p>
           <p className="mt-2 border-l-[3px] border-border pl-3 text-sm break-words whitespace-pre-line text-muted-foreground">
             {products}

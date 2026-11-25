@@ -22,7 +22,7 @@ export function SiteFooter() {
           </div>
         </div>
       </div>
-      <p className="bg-nav py-4 text-center text-xs text-[#dddddd]">© 2026 EZIMAD</p>
+      <p className="bg-nav py-4 text-center text-xs text-[#dddddd]">© 2026 Ezimarket</p>
     </footer>
   );
 }

@@ -77,7 +77,7 @@ export function ConsentField({ fields, errors }: Props<"consent">) {
           {...fields.consent}
         />
         <span>
-          J’accepte qu’EZIMAD utilise ces informations pour traiter ma demande et me contacter sur WhatsApp. Elles ne
+          J’accepte qu’Ezimarket utilise ces informations pour traiter ma demande et me contacter sur WhatsApp. Elles ne
           sont ni vendues ni transmises.
           <RequiredMark />
         </span>

@@ -9,7 +9,7 @@ import { ProductPhoto } from "./product-photo";
 
 /**
  * Fiche produit réduite à l'essentiel (demande client) : photo, nom, contenu du pack, prix du marché barré,
- * prix EZIMAD (avec le prix à l'unité) et économie, puis « Ajouter au panier » (qui devient un sélecteur de quantité).
+ * prix Ezimarket (avec le prix à l'unité) et économie, puis « Ajouter au panier » (qui devient un sélecteur de quantité).
  */
 export function ProductCard({ product, eager }: { product: Product; eager: boolean }) {
   const quantity = useCartItems()[product.id] ?? 0;
@@ -38,7 +38,7 @@ export function ProductCard({ product, eager }: { product: Product; eager: boole
         <p className="text-[0.8125rem] leading-snug text-muted-foreground">
           Prix du marché&nbsp;: <s className="whitespace-nowrap">{formatFcfa(product.marketPrice)}</s>
         </p>
-        <p className="mt-2 text-[0.8125rem] leading-tight font-bold text-success">Prix EZIMAD</p>
+        <p className="mt-2 text-[0.8125rem] leading-tight font-bold text-success">Prix Ezimarket</p>
         <p className="mt-0.5 leading-none whitespace-nowrap">
           <span className="text-2xl font-bold tabular-nums">{formatNumber(product.targetPrice)}</span>
           <span className="text-sm font-bold">&nbsp;FCFA</span>

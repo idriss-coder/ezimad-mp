@@ -40,7 +40,7 @@ function fieldErrorsOf<T>(error: z.ZodError): FieldErrors<T> {
 }
 
 function logFailure(action: string, error: unknown) {
-  console.error(`[ezimad] ${action} failed`, error instanceof MongoServerError ? error.code : (error as Error).name);
+  console.error(`[ezimarket] ${action} failed`, error instanceof MongoServerError ? error.code : (error as Error).name);
 }
 
 /**
