@@ -15,8 +15,8 @@ export function SiteFooter() {
           <div id="confidentialite">
             <h2 className="font-bold">Confidentialité</h2>
             <p className="mt-1 text-sm text-[#dddddd]">
-              Vos informations servent uniquement à mesurer la demande et à vous prévenir de l’ouverture des offres. Elles
-              ne sont ni vendues ni transmises : les producteurs ne reçoivent que des totaux. Pour les modifier ou les
+              Vos informations servent uniquement à traiter votre demande et à vous contacter sur WhatsApp. Elles ne sont
+              ni vendues ni transmises : les producteurs ne reçoivent que des totaux. Pour les modifier ou les
               supprimer, répondez à l’un de nos messages WhatsApp.
             </p>
           </div>
