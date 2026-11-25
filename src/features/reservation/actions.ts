@@ -4,7 +4,7 @@ import { MongoServerError, ObjectId } from "mongodb";
 import type { z } from "zod";
 
 import { findCompany } from "@/data/magzi-companies";
-import { findProduct, maxQuantity } from "@/data/catalog";
+import { findProduct, MAX_QUANTITY } from "@/data/catalog";
 import { COLLECTIONS, getDb } from "@/lib/db/mongo";
 import { normalizePhone } from "@/lib/phone";
 
@@ -14,13 +14,11 @@ import {
   reservationItemsSchema,
   reservationSchema,
   utmSchema,
-  waitlistSchema,
   type ProductRequestInput,
   type ReservationInput,
   type ReservationItemInput,
-  type WaitlistInput,
 } from "./schema";
-import type { ProductRequestDoc, ReservationDoc, ReservationItem, WaitlistDoc } from "./types";
+import type { ProductRequestDoc, ReservationDoc, ReservationItem } from "./types";
 
 type FieldErrors<T> = Partial<Record<keyof T, string>>;
 type Failure<T> = { ok: false; error: string; fieldErrors?: FieldErrors<T> };
@@ -28,8 +26,6 @@ type Failure<T> = { ok: false; error: string; fieldErrors?: FieldErrors<T> };
 export type ReserveResult =
   | { ok: true; reservationId: string; fullName: string; phone: string; count: number; total: number }
   | Failure<ReservationInput>;
-
-export type WaitlistResult = { ok: true; fullName: string; status: "created" | "updated" } | Failure<WaitlistInput>;
 
 export type ProductRequestResult = { ok: true; fullName: string } | Failure<ProductRequestInput>;
 
@@ -67,7 +63,7 @@ export async function reserve(
   const items: ReservationItem[] = [];
   for (const { productId, quantity } of parsedCart.data) {
     const product = findProduct(productId);
-    if (!product || quantity > maxQuantity(product)) {
+    if (!product || quantity > MAX_QUANTITY) {
       return { ok: false, error: "Un produit de votre panier n’est plus disponible dans cette quantité. Vérifiez votre panier." };
     }
     items.push({
@@ -139,49 +135,7 @@ export async function saveOtherProducts(reservationId: string, text: string): Pr
   }
 }
 
-/** Liste d'attente d'un produit épuisé : une entrée par produit et par numéro. */
-export async function joinWaitlist(productId: string, input: WaitlistInput): Promise<WaitlistResult> {
-  const parsed = waitlistSchema.safeParse(input);
-  if (!parsed.success) {
-    return { ok: false, error: "Vérifiez les champs signalés.", fieldErrors: fieldErrorsOf(parsed.error) };
-  }
-  const product = findProduct(productId);
-  if (!product) return { ok: false, error: "Produit introuvable." };
-
-  const data = parsed.data;
-  if (data.website) return { ok: true, fullName: data.fullName, status: "created" };
-
-  const phone = normalizePhone(data.phone)!;
-  const now = new Date();
-
-  try {
-    const waitlist = (await getDb()).collection<Omit<WaitlistDoc, "_id">>(COLLECTIONS.waitlist);
-    const upsert = () =>
-      waitlist.updateOne(
-        { productId: product.id, phone },
-        {
-          $set: { productName: product.name, fullName: data.fullName, updatedAt: now },
-          $setOnInsert: { consentAt: now, createdAt: now },
-        },
-        { upsert: true },
-      );
-
-    let result;
-    try {
-      result = await upsert();
-    } catch (error) {
-      // Deux envois simultanés du même numéro : le second devient une mise à jour.
-      if (error instanceof MongoServerError && error.code === 11000) result = await upsert();
-      else throw error;
-    }
-    return { ok: true, fullName: data.fullName, status: result.upsertedCount > 0 ? "created" : "updated" };
-  } catch (error) {
-    logFailure("joinWaitlist", error);
-    return { ok: false, error: UNAVAILABLE };
-  }
-}
-
-/** « Vous ne trouvez pas le produit qui vous intéresse ? » : produits souhaités + coordonnées. */
+/** « Vous ne trouvez pas ce que vous voulez ? » : produits souhaités + coordonnées. */
 export async function requestProducts(input: ProductRequestInput): Promise<ProductRequestResult> {
   const parsed = productRequestSchema.safeParse(input);
   if (!parsed.success) {

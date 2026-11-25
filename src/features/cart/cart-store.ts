@@ -2,9 +2,9 @@
 
 import { useSyncExternalStore } from "react";
 
-import { findProduct, maxQuantity, PRODUCTS, type Product } from "@/data/catalog";
+import { findProduct, MAX_QUANTITY, PRODUCTS, savingsOf, type Product } from "@/data/catalog";
 
-/** Panier : id produit → quantité. Gardé dans le navigateur (localStorage), propre à chaque appareil. */
+/** Panier : id produit → nombre de packs. Gardé dans le navigateur (localStorage), propre à chaque appareil. */
 export type CartItems = Record<string, number>;
 
 export type CartLine = { product: Product; quantity: number };
@@ -16,14 +16,13 @@ let items: CartItems = EMPTY;
 let loaded = false;
 const listeners = new Set<() => void>();
 
-/** Ignore les produits inconnus ou épuisés et ramène chaque quantité dans les bornes autorisées. */
+/** Ignore les produits inconnus (ancien catalogue) et ramène chaque quantité dans les bornes autorisées. */
 function sanitize(raw: unknown): CartItems {
   if (!raw || typeof raw !== "object") return EMPTY;
   const clean: CartItems = {};
   for (const [id, quantity] of Object.entries(raw)) {
-    const product = findProduct(id);
-    if (!product || typeof quantity !== "number" || !Number.isFinite(quantity)) continue;
-    const bounded = Math.min(Math.floor(quantity), maxQuantity(product));
+    if (!findProduct(id) || typeof quantity !== "number" || !Number.isFinite(quantity)) continue;
+    const bounded = Math.min(Math.floor(quantity), MAX_QUANTITY);
     if (bounded > 0) clean[id] = bounded;
   }
   return clean;
@@ -77,10 +76,9 @@ export function useCartItems() {
 /** Fixe la quantité d'un produit ; 0 le retire du panier. */
 export function setQuantity(productId: string, quantity: number) {
   load();
-  const product = findProduct(productId);
-  if (!product) return;
+  if (!findProduct(productId)) return;
   const next = { ...items };
-  const bounded = Math.min(Math.max(0, Math.floor(quantity)), maxQuantity(product));
+  const bounded = Math.min(Math.max(0, Math.floor(quantity)), MAX_QUANTITY);
   if (bounded > 0) next[productId] = bounded;
   else delete next[productId];
   commit(next);
@@ -98,11 +96,11 @@ export function cartSummary(cart: CartItems) {
   }));
   let count = 0;
   let total = 0;
-  let marketTotal = 0;
+  let savings = 0;
   for (const { product, quantity } of lines) {
     count += quantity;
     total += product.targetPrice * quantity;
-    marketTotal += product.marketPrice * quantity;
+    savings += savingsOf(product) * quantity;
   }
-  return { lines, count, total, savings: marketTotal - total };
+  return { lines, count, total, savings };
 }

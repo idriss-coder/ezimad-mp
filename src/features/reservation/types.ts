@@ -5,7 +5,7 @@ export type ReservationItem = {
   name: string;
   format: string;
   quantity: number;
-  /** Prix EZIMAD unitaire au moment de la réservation (FCFA). */
+  /** Prix EZIMAD d’un pack au moment de la réservation (FCFA). */
   unitPrice: number;
   marketPrice: number;
 };
@@ -25,17 +25,6 @@ export type ReservationDoc = {
   status: "pending";
   consentAt: Date;
   source?: { utmSource?: string; utmMedium?: string; utmCampaign?: string };
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-export type WaitlistDoc = {
-  _id: ObjectId;
-  productId: string;
-  productName: string;
-  fullName: string;
-  phone: string;
-  consentAt: Date;
   createdAt: Date;
   updatedAt: Date;
 };

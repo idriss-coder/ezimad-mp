@@ -3,16 +3,15 @@
 import { MinusIcon, PlusIcon, Trash2Icon } from "lucide-react";
 import { cn } from "cn";
 
-import { maxQuantity, type Product } from "@/data/catalog";
+import { MAX_QUANTITY, type Product } from "@/data/catalog";
 
 import { setQuantity } from "./cart-store";
 
 /**
- * Sélecteur de quantité du panier, comme sur Amazon mobile : corbeille à la place du « − » quand il reste 1 article.
+ * Sélecteur de quantité du panier, comme sur Amazon mobile : corbeille à la place du « − » quand il reste 1 pack.
  */
 export function QuantityStepper({ product, quantity, className }: { product: Product; quantity: number; className?: string }) {
-  const max = maxQuantity(product);
-  const atMax = quantity >= max;
+  const atMax = quantity >= MAX_QUANTITY;
 
   return (
     <div
@@ -35,7 +34,7 @@ export function QuantityStepper({ product, quantity, className }: { product: Pro
         type="button"
         onClick={() => setQuantity(product.id, quantity + 1)}
         disabled={atMax}
-        aria-label={atMax ? `Quantité maximale atteinte (${max})` : "Augmenter la quantité"}
+        aria-label={atMax ? `Quantité maximale atteinte (${MAX_QUANTITY})` : "Augmenter la quantité"}
         className="grid w-10 shrink-0 cursor-pointer place-items-center rounded-r-full hover:bg-surface disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:bg-transparent"
       >
         <PlusIcon className="size-4" aria-hidden />

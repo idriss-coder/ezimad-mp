@@ -10,11 +10,11 @@ Salariés des zones industrielles MAGZI (Cameroun), le plus souvent sur mobile, 
 
 ## Product Purpose
 
-Faire passer les salariés à l'action : réserver dès maintenant des produits au prix EZIMAD, sans paiement initial, avant la date limite des réductions (décision client du 2026-10-28). L'équipe recontacte chaque réservation sur WhatsApp. Succès : réservation enregistrée (panier + coordonnées), puis réponse au champ libre « autres produits ». (La partie entreprises partenaires est masquée pour l'instant.)
+Faire passer les salariés à l'action : réserver des packs au prix EZIMAD, sans paiement initial. L'argument est l'économie par rapport au prix du marché, sans effet d'urgence (décision client du 2026-11-25). L'équipe recontacte chaque réservation sur WhatsApp. Succès : réservation enregistrée (panier + coordonnées), puis réponse au champ libre « autres produits ». (La partie entreprises partenaires est masquée pour l'instant.)
 
 ## Brand Personality
 
-Nostalgique, simple, franc (décision client du 2026-10-13). Le site doit ressembler à une page web « d'avant » : HTML de débutant, polices système, liens soulignés, filets gris, boutons à l'ancienne, contrastes forts. Références : Amazon classique (bandeau marine, boutons jaunes et orange en léger dégradé, liste de résultats image + titre + ligne de notation, focus orange) et les pages « compte à rebours » (titre en capitales, filet rouge, gros chiffres rouges séparés par « : », libellés sous chaque nombre).
+Nostalgique, simple, franc (décision client du 2026-10-13). Le site doit ressembler à une page web « d'avant » : HTML de débutant, polices système, liens soulignés, filets gris, boutons à l'ancienne, contrastes forts. Références : Amazon classique (bandeau marine, boutons jaunes et orange en léger dégradé, liste de résultats image + titre + prix, focus orange).
 
 ## Anti-references
 
@@ -22,9 +22,9 @@ Landing pages modernes « générées par IA » : grandes typos serrées, cartes
 
 ## Design Principles
 
-1. Une page, deux blocs : le compte à rebours jusqu'à la date limite des réductions en haut (avec « Pas de paiement initial requis »), la grille des produits du quotidien en dessous (une rubrique par catégorie, étoiles, prix EZIMAD avec remise, prix du marché barré, stock restant, « Ajouter au panier »). Rien d'autre.
-2. Panier façon Amazon : compteur dans l'en-tête, barre « Réserver » en bas d'écran, puis tout le parcours dans une boîte de dialogue : panier → coordonnées → « réservation enregistrée » + champ libre « autres produits ». Produit épuisé : liste d'attente.
-3. Urgence assumée (demande client) : date limite, stock restant, produits épuisés. Notes en étoiles et stocks sont des valeurs fixes choisies dans `src/data/catalog.ts`, identiques pour tous, jamais aléatoires à l'affichage. Prix barrés = prix réellement relevés (source et date dans `src/data/catalog.ts`).
+1. Une page, deux blocs : le titre en haut (avec « Pas de paiement initial requis »), la grille des produits en pack en dessous. Une fiche = photo, nom, contenu du pack, prix du marché barré, prix EZIMAD du pack (avec le prix à l'unité), économie en FCFA, « Ajouter au panier ». Rien d'autre.
+2. Panier façon Amazon : compteur dans l'en-tête, barre « Réserver » en bas d'écran, puis tout le parcours dans une boîte de dialogue : panier → coordonnées → « réservation enregistrée » + champ libre « autres produits ».
+3. Pas d'urgence (décision client du 2026-11-25) : ni compteur, ni date limite, ni stock, ni « épuisé », ni étoiles. Seuls le prix et l'économie parlent. Prix barrés = références du catalogue client du 2026-11-24, à valider par un relevé avant publication. Prix d'achat et marges ne sont jamais envoyés au navigateur.
 4. Hiérarchie par la taille, la graisse et les filets, pas par la décoration.
 5. Mobile d'abord : « Pas de paiement initial requis » et « Voir les produits » visibles sans défiler.
 

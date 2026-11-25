@@ -8,8 +8,9 @@ export const COLLECTIONS = {
   /** Inscriptions de la V1 (avant le panier) : conservées, plus alimentées. */
   employees: "ezimad_employees",
   reservations: "ezimad_reservations",
+  /** Listes d'attente des produits épuisés (ancien catalogue) : conservées, plus alimentées. */
   waitlist: "ezimad_waitlist",
-  /** Demandes « Vous ne trouvez pas le produit qui vous intéresse ? ». */
+  /** Demandes « Vous ne trouvez pas ce que vous voulez ? ». */
   productRequests: "ezimad_product_requests",
   partnerLeads: "ezimad_partner_leads",
 } as const;

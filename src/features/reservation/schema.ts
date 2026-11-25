@@ -5,7 +5,7 @@ import { normalizePhone } from "@/lib/phone";
 
 const optionalTrimmed = (max: number) => z.string().trim().max(max).optional();
 
-/** Champs communs à la réservation et à la liste d'attente. */
+/** Champs communs à la réservation et à la demande de produits. */
 const contactFields = {
   fullName: z.string().trim().min(2, "Indiquez votre nom et prénom").max(100, "100 caractères maximum"),
   phone: z
@@ -47,13 +47,7 @@ export const utmSchema = z
 
 export const otherProductsSchema = z.string().trim().min(2, "Indiquez au moins un produit").max(1000, "1 000 caractères maximum");
 
-/** Inscription sur la liste d'attente d'un produit épuisé. */
-export const waitlistSchema = z.object(contactFields);
-
-export type WaitlistInput = z.input<typeof waitlistSchema>;
-export type WaitlistData = z.output<typeof waitlistSchema>;
-
-/** Demande d'autres produits à prix réduit, en bas de la liste : produits souhaités puis coordonnées. */
+/** Proposition de produits, en bas de la liste : produits souhaités puis coordonnées. */
 export const productRequestSchema = z.object({ products: otherProductsSchema, ...contactFields });
 
 export type ProductRequestInput = z.input<typeof productRequestSchema>;

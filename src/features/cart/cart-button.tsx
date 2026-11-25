@@ -7,7 +7,7 @@ import { formatFcfa } from "@/lib/format";
 import { cartSummary, useCartItems } from "./cart-store";
 import { useShop } from "./shop-provider";
 
-/** Panier de l'en-tête, comme sur Amazon : icône, nombre d'articles en orange, libellé « Panier ». */
+/** Panier de l'en-tête, comme sur Amazon : icône, nombre de packs en orange, libellé « Panier ». */
 export function CartButton() {
   const { openCart } = useShop();
   const { count } = cartSummary(useCartItems());
@@ -16,7 +16,7 @@ export function CartButton() {
     <button
       type="button"
       onClick={openCart}
-      aria-label={`Panier, ${count} article${count > 1 ? "s" : ""}`}
+      aria-label={`Panier, ${count} pack${count > 1 ? "s" : ""}`}
       className="flex cursor-pointer items-end gap-1 rounded-[2px] px-1.5 py-1.5 outline-offset-0 hover:outline hover:outline-1 hover:outline-white"
     >
       <span className="relative">
@@ -36,7 +36,7 @@ export function CartButton() {
 }
 
 /**
- * Barre fixée en bas de l'écran dès que le panier contient un article : sous-total et bouton « Réserver ».
+ * Barre fixée en bas de l'écran dès que le panier contient un pack : sous-total et bouton « Réserver ».
  * Un espace de même hauteur est réservé en fin de page pour ne rien masquer.
  */
 export function CartBar() {
@@ -51,7 +51,7 @@ export function CartBar() {
         <div className="mx-auto flex max-w-4xl items-center justify-between gap-3 px-4 py-2.5">
           <p className="leading-tight">
             <span className="block text-sm text-muted-foreground">
-              Sous-total ({count} article{count > 1 ? "s" : ""})
+              Sous-total ({count} pack{count > 1 ? "s" : ""})
             </span>
             <strong className="text-lg whitespace-nowrap">{formatFcfa(total)}</strong>
           </p>

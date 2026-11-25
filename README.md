@@ -1,9 +1,8 @@
 # EZIMAD-MP — Vitrine salariés MAGZI
 
 Landing `/cm` au style volontairement « web d'avant » (inspiré d'Amazon classique) qui constitue une base de
-demande qualifiée : compte à rebours réel des inscriptions vers l'objectif de 2 000, liste des catégories de produits
-avec le nombre d'intéressés (cœurs), et inscription en deux étapes dans une boîte de dialogue (informations, puis
-catégories). La section entreprises partenaires est masquée (code conservé dans `src/features/partner-leads`).
+demande qualifiée : catalogue de produits vendus en pack (prix du marché barré, prix EZIMAD, économie), panier et
+réservation sans paiement dans une boîte de dialogue, et proposition libre d'autres produits. La section entreprises partenaires est masquée (code conservé dans `src/features/partner-leads`).
 Le back-office n'est pas encore construit (voir `docs/`).
 
 ## Stack
@@ -43,8 +42,9 @@ la fiche existante (aucun doublon) ; ses catégories sont remplacées par le der
 
 - `src/data/magzi-companies.ts` — liste officielle des entreprises et zones (les entrées `temporary`
   ne s'affichent qu'en développement ; la saisie libre reste toujours possible).
-- `src/data/catalog.ts` — catégories (titre, produits, photo dans `public/categories/`). Les ids sont stockés en
-  base : ne pas les renommer, en ajouter. La photo de « Plastiques et équipements ménagers » est provisoire.
+- `src/data/catalog.ts` — produits en pack (prix du marché, prix EZIMAD, photo dans `public/products/`). Les ids sont
+  stockés dans les réservations : ne pas les réutiliser. `illustration: true` signale une photo
+  générique : à remplacer par l'emballage réel dans `public/products/`, puis retirer le champ.
 
 ## Déploiement Vercel
 

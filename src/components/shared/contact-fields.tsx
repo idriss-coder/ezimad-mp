@@ -10,7 +10,7 @@ type Props<K extends ContactField> = {
   errors: Partial<Record<K, HookFieldError>>;
 };
 
-/** Nom & prénom + numéro WhatsApp, communs à la réservation et à la liste d'attente. */
+/** Nom & prénom + numéro WhatsApp, communs à la réservation et à la demande de produits. */
 export function NameAndPhoneFields({
   fields,
   errors,

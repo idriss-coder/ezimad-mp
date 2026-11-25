@@ -39,10 +39,10 @@ function Contours({ className }: { className: string }) {
 }
 
 /**
- * Relief discret derrière la section du compteur : deux reliefs topographiques dans les coins opposés,
- * effacés au centre par un masque pour ne jamais gêner la lecture du titre et du compteur.
+ * Relief discret derrière le titre de la page : deux reliefs topographiques dans les coins opposés,
+ * effacés au centre par un masque pour ne jamais gêner la lecture.
  */
-export function CountdownBackdrop() {
+export function HeroBackdrop() {
   return (
     <div
       aria-hidden

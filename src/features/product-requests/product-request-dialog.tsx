@@ -15,7 +15,7 @@ import {
   type ProductRequestInput,
 } from "@/features/reservation/schema";
 
-const PHONE_HINT = "Nous vous écrirons sur ce numéro dès que ces produits seront proposés à prix réduit.";
+const PHONE_HINT = "Nous vous écrirons sur ce numéro si ces produits arrivent sur EZIMAD.";
 
 const EMPTY: DefaultValues<ProductRequestInput> = { products: "", fullName: "", phone: "", consent: false, website: "" };
 
@@ -24,7 +24,7 @@ type RequestForm = UseFormReturn<ProductRequestInput, unknown, ProductRequestDat
 
 type Props = { open: boolean; onOpenChange: (open: boolean) => void };
 
-/** Demande d'autres produits : produits souhaités → coordonnées → confirmation. */
+/** Proposition de produits : produits souhaités → coordonnées → confirmation. */
 export function ProductRequestDialog({ open, onOpenChange }: Props) {
   const [step, setStep] = useState<"products" | "contact">("products");
   const [requested, setRequested] = useState<Requested | null>(null);
@@ -38,7 +38,7 @@ export function ProductRequestDialog({ open, onOpenChange }: Props) {
     <Modal
       open={open}
       onOpenChange={onOpenChange}
-      title="Demander d’autres produits"
+      title="Proposer un produit"
       onOpenChangeComplete={(isOpen) => {
         if (isOpen) return;
         // Demande envoyée : on repart de zéro (coordonnées conservées). Sinon on garde la saisie.
@@ -80,9 +80,9 @@ function ProductsStep({ form, onNext }: { form: RequestForm; onNext: () => void 
     <form noValidate onSubmit={next} className="flex min-h-0 flex-1 flex-col">
       <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-5">
         <h3 ref={headingRef} tabIndex={-1} data-step-heading className="text-lg leading-snug font-bold outline-none">
-          Quels produits aimeriez-vous voir à prix réduit&nbsp;?
+          Que cherchez-vous&nbsp;?
         </h3>
-        <p className="mt-1 mb-4 text-sm text-muted-foreground">Étape 1 sur 2 · marques, formats… écrivez librement.</p>
+        <p className="mt-1 mb-4 text-sm text-muted-foreground">Étape 1 sur 2 · écrivez librement.</p>
         <Field id="products" label="Produits souhaités" error={errors.products?.message}>
           <textarea
             id="products"
@@ -149,7 +149,7 @@ function ContactStep({
           Vos coordonnées
         </h3>
         <p className="mt-1 mb-4 text-sm text-muted-foreground">
-          Étape 2 sur 2 · pour vous prévenir dès que ces produits arrivent.
+          Étape 2 sur 2 · pour vous prévenir si ces produits arrivent.
         </p>
         <div className="flex flex-col gap-4">
           <NameAndPhoneFields
@@ -191,8 +191,7 @@ function RequestDone({ requested, products }: { requested: Requested; products: 
             Demande enregistrée
           </h3>
           <p className="mt-1">
-            Merci {requested.fullName}. Vous serez prévenu(e) sur WhatsApp dès que ces produits seront disponibles à
-            prix réduit sur EZIMAD&nbsp;:
+            Merci {requested.fullName}. Nous vous préviendrons sur WhatsApp si ces produits arrivent sur EZIMAD&nbsp;:
           </p>
           <p className="mt-2 border-l-[3px] border-border pl-3 text-sm break-words whitespace-pre-line text-muted-foreground">
             {products}

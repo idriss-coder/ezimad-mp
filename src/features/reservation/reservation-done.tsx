@@ -54,7 +54,7 @@ export function ReservationDone({ reserved }: { reserved: Reserved }) {
               Réservation enregistrée
             </h3>
             <p className="mt-1">
-              Merci {reserved.fullName}. Vos {reserved.count} article{reserved.count > 1 ? "s" : ""} (
+              Merci {reserved.fullName}. Vos {reserved.count} pack{reserved.count > 1 ? "s" : ""} (
               {formatFcfa(reserved.total)}) sont réservés au prix EZIMAD.
             </p>
           </div>

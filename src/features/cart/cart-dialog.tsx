@@ -1,13 +1,13 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useForm, type DefaultValues } from "react-hook-form";
 
 import { Modal, ModalFooter } from "@/components/shared/modal";
 import { DialogClose } from "@/components/ui/dialog";
 import { formatFcfa } from "@/lib/format";
+import { ProductPhoto } from "@/features/products/product-photo";
 import { ReservationDone } from "@/features/reservation/reservation-done";
 import { ReservationForm, type Reserved } from "@/features/reservation/reservation-form";
 import { reservationSchema, type ReservationData, type ReservationInput } from "@/features/reservation/schema";
@@ -108,19 +108,17 @@ function CartView({ onReserve, focusOnMount }: { onReserve: () => void; focusOnM
         <ul className="mt-2">
           {lines.map(({ product, quantity }) => (
             <li key={product.id} className="flex gap-3 border-b border-border py-3">
-              <Image
-                src={product.image}
-                alt=""
-                width={80}
-                height={80}
-                className="size-16 shrink-0 border border-border object-cover sm:size-20"
+              <ProductPhoto
+                product={product}
+                size={80}
+                decorative
+                className="size-16 shrink-0 border border-border sm:size-20"
               />
               <div className="flex min-w-0 flex-1 flex-col gap-1">
                 <p className="leading-snug">
                   <span className="font-bold">{product.name}</span>
                   <span className="block text-[0.8125rem] text-muted-foreground">{product.format}</span>
                 </p>
-                <p className="text-[0.8125rem] font-bold text-heart">Plus que {product.stock} en stock</p>
                 <div className="mt-1 flex flex-wrap items-center justify-between gap-2">
                   <QuantityStepper product={product} quantity={quantity} className="w-32" />
                   <p className="text-right leading-tight">
@@ -136,7 +134,7 @@ function CartView({ onReserve, focusOnMount }: { onReserve: () => void; focusOnM
         </ul>
 
         <p className="mt-4 text-right text-lg">
-          Sous-total ({count} article{count > 1 ? "s" : ""})&nbsp;: <strong className="whitespace-nowrap">{formatFcfa(total)}</strong>
+          Sous-total ({count} pack{count > 1 ? "s" : ""})&nbsp;: <strong className="whitespace-nowrap">{formatFcfa(total)}</strong>
         </p>
         <p className="text-right text-sm font-bold text-success">Vous économisez {formatFcfa(savings)}</p>
 

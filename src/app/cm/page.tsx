@@ -2,12 +2,10 @@ import type { Metadata } from "next";
 
 import { SiteFooter } from "@/components/shared/site-footer";
 import { SiteHeader } from "@/components/shared/site-header";
-import { OFFER_DEADLINE_LABEL } from "@/data/catalog";
 import { CartBar } from "@/features/cart/cart-button";
 import { NoPaymentNotice } from "@/features/cart/no-payment-notice";
 import { ShopProvider } from "@/features/cart/shop-provider";
-import { CountdownBackdrop } from "@/features/offer/countdown-backdrop";
-import { DeadlineCountdown } from "@/features/offer/deadline-countdown";
+import { HeroBackdrop } from "@/features/offer/hero-backdrop";
 import { ProductRequestSection } from "@/features/product-requests/product-request-section";
 import { ProductList } from "@/features/products/product-list";
 
@@ -17,8 +15,7 @@ export const metadata: Metadata = {
 };
 
 /*
- * Page volontairement « à l'ancienne » (demande client) : le compte à rebours des réductions en haut,
- * les produits en dessous. On ajoute au panier, puis « Réserver » ouvre le dialogue du panier (coordonnées → confirmation).
+ * Page volontairement « à l'ancienne » (demande client) : le titre en haut, les produits en pack en dessous. On ajoute au panier, puis « Réserver » ouvre le dialogue du panier (coordonnées → confirmation).
  * La section entreprises partenaires est masquée (code conservé dans `features/partner-leads`).
  */
 export default function CmPage() {
@@ -30,7 +27,7 @@ export default function CmPage() {
           aria-labelledby="offre-title"
           className="relative isolate overflow-hidden border-b border-border px-4 py-10 text-center sm:py-14"
         >
-          <CountdownBackdrop />
+          <HeroBackdrop />
           <h1
             id="offre-title"
             className="mx-auto max-w-3xl text-[clamp(1.375rem,4.2vw,2.125rem)] leading-tight font-bold text-balance"
@@ -38,14 +35,9 @@ export default function CmPage() {
             Les produits des entreprises MAGZI, à prix préférentiels pour les salariés des zones industrielles.
           </h1>
           <p className="mx-auto mt-3 max-w-2xl text-pretty sm:text-lg">
-            Réservez avant le <strong>{OFFER_DEADLINE_LABEL}</strong> pour bénéficier des réductions affichées.
+            Réservez vos packs au prix EZIMAD et économisez sur chaque produit.
           </p>
-          <div aria-hidden className="mx-auto mt-5 h-[3px] w-16 bg-heart" />
-          <p className="mt-6 text-[0.625rem] font-bold tracking-[0.12em] uppercase">Fin des réductions dans</p>
-          <div className="mt-3">
-            <DeadlineCountdown />
-          </div>
-          <NoPaymentNotice className="mx-auto mt-8 max-w-md" />
+          <NoPaymentNotice className="mx-auto mt-6 max-w-md" />
           <a href="#produits" className="btn-buy mt-5 w-full max-w-xs text-base font-bold">
             Voir les produits
           </a>

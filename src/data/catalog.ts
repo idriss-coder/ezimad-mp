@@ -55,194 +55,262 @@ export const CATEGORIES = [
 export type CategoryId = (typeof CATEGORIES)[number]["id"];
 export const CATEGORY_IDS = CATEGORIES.map((c) => c.id) as [CategoryId, ...CategoryId[]];
 
-/** Date limite des réductions affichées (fin de journée, heure de Douala). */
-export const OFFER_DEADLINE = "2026-11-30T23:59:59+01:00";
-export const OFFER_DEADLINE_LABEL = "30 novembre";
-
-/** Quantité maximale par produit dans le panier. */
+/** Nombre maximal de packs par produit dans le panier. */
 export const MAX_QUANTITY = 10;
 
 /**
- * Produits non périssables du quotidien, sous les marques connues au Cameroun, affichés avec leurs prix.
+ * Catalogue de lancement : 20 produits vendus en pack (fichier client du 24/11/2026).
  *
- * `marketPrice` : prix relevés le 27/10/2026 sur sasayez.biz (commerce en ligne, Douala) ;
- * huile d'arachide : tarif du producteur camerounais Mbiang. Ce sont les prix barrés.
- * `targetPrice` : prix EZIMAD, valable pour toute réservation faite avant `OFFER_DEADLINE` (remise de 14 à 17 %).
- * Montants en FCFA, arrondis à 25 F. Photos des emballages dans `public/products/`.
- * `rating` et `stock` sont des valeurs d'affichage fixées dans ce fichier (demande client) : identiques pour tous.
+ * `marketPrice` : prix du marché pour la même quantité achetée au détail (prix barré). Ce sont des références
+ * fournies par le client, pas des relevés : le fichier source demande de les valider avant publication.
+ * `targetPrice` : prix EZIMAD du pack. Montants en FCFA.
+ * Les prix d'achat et les marges du fichier source ne doivent jamais figurer ici : ce module est envoyé au navigateur.
+ *
+ * Les ids sont stockés dans les réservations : ne pas les réutiliser pour un autre produit.
+ * Photos carrées dans `public/products/`.
  */
 export type Product = {
   id: string;
   /** Nom affiché, marque comprise. */
   name: string;
+  /** Contenu du pack, affiché sous le nom. */
   format: string;
-  categoryId: CategoryId;
+  /** Nombre d'articles dans le pack. */
+  packSize: number;
+  /** Nom d'un article du pack (« bidon »), pour le prix unitaire. */
+  unit: string;
   image: string;
   imageAlt: string;
+  /** La photo montre le produit en général, pas l’emballage réel : mention « Photo d’illustration ». */
+  illustration?: boolean;
+  /** Prix du marché pour tout le pack (barré). */
   marketPrice: number;
+  /** Prix EZIMAD du pack. */
   targetPrice: number;
-  /** Note sur 5 affichée en étoiles (valeur fixe, choisie une fois pour toutes). */
-  rating: number;
-  /** Quantité encore disponible au prix EZIMAD (valeur fixe). `0` = épuisé : liste d'attente. */
-  stock: number;
 };
 
 export const PRODUCTS = [
   {
-    id: "huile-raffinee",
-    name: "Huile raffinée Mayor",
-    format: "Bouteille de 1 L",
-    categoryId: "alimentation",
-    image: "/products/huile-mayor.jpg",
-    imageAlt: "Bouteille d’huile raffinée Mayor de 1 litre",
-    marketPrice: 1500,
-    targetPrice: 1275,
-    rating: 4.6,
-    stock: 14,
+    id: "ezm-001",
+    name: "Huile alimentaire Mayor",
+    format: "Pack de 4 bidons de 5 L",
+    packSize: 4,
+    unit: "bidon",
+    image: "/products/huile-mayor-5l.jpg",
+    imageAlt: "Bidon d’huile Mayor de 5 litres",
+    marketPrice: 28500,
+    targetPrice: 23500,
   },
   {
-    id: "huile-arachide",
-    name: "Huile d’arachide Mbiang",
-    format: "Bouteille de 1 L",
-    categoryId: "alimentation",
-    image: "/products/huile-arachide-mbiang.jpg",
-    imageAlt: "Bouteille d’huile d’arachide Mbiang",
-    marketPrice: 2100,
-    targetPrice: 1800,
-    rating: 4.7,
-    stock: 0,
+    id: "ezm-002",
+    name: "Huile alimentaire Mayor",
+    format: "Pack de 15 bouteilles de 1 L",
+    packSize: 15,
+    unit: "bouteille",
+    image: "/products/huile-mayor-1l.jpg",
+    imageAlt: "Bouteille d’huile Mayor de 1 litre",
+    marketPrice: 20805,
+    targetPrice: 16900,
   },
   {
-    id: "riz",
-    name: "Riz blanc Broli",
-    format: "Sac de 5 kg",
-    categoryId: "alimentation",
-    image: "/products/riz-broli.jpg",
-    imageAlt: "Sac de riz blanc Broli de 5 kg",
-    marketPrice: 4500,
-    targetPrice: 3850,
-    rating: 4.5,
-    stock: 9,
+    id: "ezm-003",
+    name: "Huile alimentaire Prima Palm",
+    format: "Pack de 15 bouteilles de 1 L",
+    packSize: 15,
+    unit: "bouteille",
+    image: "/products/huile-prima-palm-1l.jpg",
+    imageAlt: "Bouteille d’huile Prima Palm de 1 litre",
+    marketPrice: 19500,
+    targetPrice: 16000,
   },
   {
-    id: "sucre",
-    name: "Sucre Princesse Tatie",
-    format: "Paquet de 1 kg",
-    categoryId: "alimentation",
-    image: "/products/sucre-princesse-tatie.jpg",
-    imageAlt: "Paquet de sucre blanc en poudre Princesse Tatie de 1 kg",
-    marketPrice: 975,
-    targetPrice: 825,
-    rating: 4.2,
-    stock: 23,
+    id: "ezm-004",
+    name: "Savon de ménage Mayor",
+    format: "Pack de 10 savons de 400 g",
+    packSize: 10,
+    unit: "savon",
+    image: "/products/savon-mayor-400g.jpg",
+    imageAlt: "Savon de ménage Mayor",
+    marketPrice: 5000,
+    targetPrice: 4000,
   },
   {
-    id: "lait-poudre",
-    name: "Lait en poudre Peak",
-    format: "Boîte de 400 g",
-    categoryId: "alimentation",
-    image: "/products/lait-peak.jpg",
-    imageAlt: "Boîte de lait en poudre Peak",
-    marketPrice: 3000,
-    targetPrice: 2550,
-    rating: 4.8,
-    stock: 0,
+    id: "ezm-005",
+    name: "Savon de ménage May",
+    format: "Pack de 10 savons de 200 g",
+    packSize: 10,
+    unit: "savon",
+    image: "/products/savon-may.jpg",
+    imageAlt: "Savon de ménage May",
+    marketPrice: 2500,
+    targetPrice: 2100,
   },
   {
-    id: "spaghettis",
-    name: "Spaghettis Broli",
-    format: "Paquet de 500 g",
-    categoryId: "alimentation",
-    image: "/products/spaghettis-broli.jpg",
-    imageAlt: "Paquets de spaghettis Broli",
-    marketPrice: 650,
-    targetPrice: 550,
-    rating: 4.1,
-    stock: 31,
+    id: "ezm-006",
+    name: "Concentré de tomates Mamy",
+    format: "Pack de 50 sachets de 70 g",
+    packSize: 50,
+    unit: "sachet",
+    image: "/products/tomate-mamy-70g.jpg",
+    imageAlt: "Concentré de tomates Mamy de 70 g",
+    marketPrice: 6250,
+    targetPrice: 4750,
   },
   {
-    id: "concentre-tomate",
-    name: "Concentré de tomate Gino",
-    format: "Boîte de 400 g",
-    categoryId: "alimentation",
-    image: "/products/tomate-gino.jpg",
-    imageAlt: "Boîte de concentré de tomate Gino",
-    marketPrice: 1100,
-    targetPrice: 950,
-    rating: 4.4,
-    stock: 17,
+    id: "ezm-007",
+    name: "Jus Extra Fresco",
+    format: "Pack de 24 bouteilles de 330 ml",
+    packSize: 24,
+    unit: "bouteille",
+    image: "/products/extra-fresco-orange.jpg",
+    imageAlt: "Bouteille de jus d’orange Extra Fresco",
+    marketPrice: 9000,
+    targetPrice: 6900,
   },
   {
-    id: "savon-menage",
-    name: "Savon de ménage Azur",
-    format: "Lot de 10 barres de 400 g",
-    categoryId: "hygiene",
-    image: "/products/savon-azur.jpg",
-    imageAlt: "Barre de savon de ménage Azur",
-    marketPrice: 4000,
-    targetPrice: 3400,
-    rating: 4.6,
-    stock: 6,
+    id: "ezm-008",
+    name: "Boisson Tam Tam",
+    format: "Pack de 24 sachets de 200 ml",
+    packSize: 24,
+    unit: "sachet",
+    image: "/products/tam-tam-200ml.jpg",
+    imageAlt: "Sachet de boisson Tam Tam de 200 ml",
+    marketPrice: 3600,
+    targetPrice: 2800,
   },
   {
-    id: "detergent",
-    name: "Détergent Madar",
-    format: "Sachet de 900 g",
-    categoryId: "hygiene",
-    image: "/products/detergent-madar.jpg",
-    imageAlt: "Sachet de détergent en poudre Madar",
-    marketPrice: 1600,
+    id: "ezm-009",
+    name: "Yaourt Dolait Ninou",
+    format: "Pack de 5 pots de 150 g",
+    packSize: 5,
+    unit: "pot",
+    image: "/products/dolait-ninou-150g.jpg",
+    imageAlt: "Pot de yaourt Dolait Ninou de 150 g",
+    marketPrice: 1700,
     targetPrice: 1350,
-    rating: 4.0,
-    stock: 12,
   },
   {
-    id: "javel",
-    name: "Eau de javel La Croix",
-    format: "Bouteille de 1 L",
-    categoryId: "hygiene",
-    image: "/products/javel-la-croix.jpg",
-    imageAlt: "Bouteille d’eau de javel La Croix",
-    marketPrice: 1000,
-    targetPrice: 850,
-    rating: 4.3,
-    stock: 27,
-  },
-  {
-    id: "papier-toilette",
-    name: "Papier hygiénique Sita",
-    format: "Lot de 10 rouleaux",
-    categoryId: "hygiene",
-    image: "/products/papier-sita.jpg",
-    imageAlt: "Rouleau de papier hygiénique Sita",
-    marketPrice: 3000,
-    targetPrice: 2550,
-    rating: 4.5,
-    stock: 8,
-  },
-  {
-    id: "dentifrice",
-    name: "Dentifrice Colgate",
-    format: "Tube de 125 ml",
-    categoryId: "hygiene",
-    image: "/products/dentifrice-colgate.jpg",
-    imageAlt: "Tube de dentifrice Colgate dans sa boîte",
-    marketPrice: 1350,
-    targetPrice: 1150,
-    rating: 4.7,
-    stock: 19,
-  },
-  {
-    id: "eau-minerale",
+    id: "ezm-010",
     name: "Eau minérale Supermont",
     format: "Pack de 6 bouteilles de 1,5 L",
-    categoryId: "boissons",
+    packSize: 6,
+    unit: "bouteille",
     image: "/products/eau-supermont.jpg",
-    imageAlt: "Pack de 6 bouteilles d’eau minérale Supermont de 1,5 L",
+    imageAlt: "Pack de 6 bouteilles d’eau Supermont de 1,5 L",
     marketPrice: 1500,
-    targetPrice: 1250,
-    rating: 4.2,
-    stock: 11,
+    targetPrice: 1050,
+  },
+  {
+    id: "ezm-011",
+    name: "Super Jus Mangue",
+    format: "Pack de 6 bouteilles de 1 L",
+    packSize: 6,
+    unit: "bouteille",
+    image: "/products/mangue.jpg",
+    imageAlt: "Mangue",
+    illustration: true,
+    marketPrice: 3600,
+    targetPrice: 2900,
+  },
+  {
+    id: "ezm-012",
+    name: "Soda Planet Orange",
+    format: "Pack de 6 bouteilles de 1 L",
+    packSize: 6,
+    unit: "bouteille",
+    image: "/products/planet-orange-1l.jpg",
+    imageAlt: "Bouteille de soda Planet Orange de 1 litre",
+    marketPrice: 3000,
+    targetPrice: 2600,
+  },
+  {
+    id: "ezm-013",
+    name: "American Cola",
+    format: "Pack de 6 bouteilles de 1 L",
+    packSize: 6,
+    unit: "bouteille",
+    image: "/products/american-cola.jpg",
+    imageAlt: "Bouteille d’American Cola",
+    marketPrice: 3000,
+    targetPrice: 2600,
+  },
+  {
+    id: "ezm-014",
+    name: "Naya Super Milk",
+    format: "Pack de 20 sachets",
+    packSize: 20,
+    unit: "sachet",
+    image: "/products/naya-super-milk.jpg",
+    imageAlt: "Sachet de Naya Super Milk",
+    marketPrice: 2500,
+    targetPrice: 1900,
+  },
+  {
+    id: "ezm-015",
+    name: "Biscuit Naya Chocolat",
+    format: "Pack de 24 paquets",
+    packSize: 24,
+    unit: "paquet",
+    image: "/products/biscuit-naya-chocolat.jpg",
+    imageAlt: "Biscuit Naya au chocolat",
+    marketPrice: 2400,
+    targetPrice: 1800,
+  },
+  {
+    id: "ezm-016",
+    name: "Biscuit Naya Olait",
+    format: "Pack de 24 paquets",
+    packSize: 24,
+    unit: "paquet",
+    image: "/products/biscuit-naya-olait.jpg",
+    imageAlt: "Biscuits Naya O.lait",
+    marketPrice: 1440,
+    targetPrice: 1150,
+  },
+  {
+    id: "ezm-017",
+    name: "Lait La Bergère",
+    format: "Pack de 20 sachets de 50 g",
+    packSize: 20,
+    unit: "sachet",
+    image: "/products/lait-la-bergere.jpg",
+    imageAlt: "Sachet de lait en poudre La Bergère",
+    marketPrice: 2500,
+    targetPrice: 2100,
+  },
+  {
+    id: "ezm-018",
+    name: "Margarine Gusta",
+    format: "Pack de 4 pots de 250 g",
+    packSize: 4,
+    unit: "pot",
+    image: "/products/margarine-gusta.jpg",
+    imageAlt: "Pot de margarine Gusta",
+    marketPrice: 2600,
+    targetPrice: 2100,
+  },
+  {
+    id: "ezm-019",
+    name: "Riz Princesse",
+    format: "Pack de 2 sacs de 25 kg",
+    packSize: 2,
+    unit: "sac",
+    image: "/products/riz-blanc.jpg",
+    imageAlt: "Grains de riz blanc",
+    illustration: true,
+    marketPrice: 30000,
+    targetPrice: 26500,
+  },
+  {
+    id: "ezm-020",
+    name: "Sucre cristallisé",
+    format: "Pack de 5 sachets de 1 kg",
+    packSize: 5,
+    unit: "sachet",
+    image: "/products/sucre-dolce-1kg.jpg",
+    imageAlt: "Sachet de sucre Dolcé de 1 kg",
+    marketPrice: 4500,
+    targetPrice: 3900,
   },
 ] as const satisfies readonly Product[];
 
@@ -250,7 +318,8 @@ export type ProductId = (typeof PRODUCTS)[number]["id"];
 
 export const findProduct = (id: string): Product | undefined => PRODUCTS.find((product) => product.id === id);
 
-/** Quantité maximale réservable pour un produit (0 s'il est épuisé). */
-export const maxQuantity = (product: Product) => Math.min(product.stock, MAX_QUANTITY);
+/** Ce que l'on économise sur un pack par rapport au prix du marché. */
+export const savingsOf = (product: Product) => product.marketPrice - product.targetPrice;
 
-export const discountPercent = (product: Product) => Math.round((1 - product.targetPrice / product.marketPrice) * 100);
+/** Prix EZIMAD ramené à un article du pack, arrondi au franc. */
+export const unitPriceOf = (product: Product) => Math.round(product.targetPrice / product.packSize);

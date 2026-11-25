@@ -75,7 +75,7 @@ export function ReservationForm({ form, cart, onBack, onDone }: Props) {
           Vos coordonnées
         </h3>
         <p className="mt-1 mb-4 text-sm text-muted-foreground">
-          {count} article{count > 1 ? "s" : ""} · <strong className="text-foreground">{formatFcfa(total)}</strong> ·
+          {count} pack{count > 1 ? "s" : ""} · <strong className="text-foreground">{formatFcfa(total)}</strong> ·
           aucun paiement maintenant.
         </p>
 
